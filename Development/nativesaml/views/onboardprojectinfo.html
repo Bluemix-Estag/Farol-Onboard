@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Manage IO</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link href="style/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="style/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="style/picker.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/style/form.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xls/0.7.4-a/xls.js"></script>
+    <script src="scripts/xls.js"></script>
+    <script src="scripts/materialize.js"></script>
+    <script src="scripts/example.js"></script>
+
+    <style>
+        #position {
+            position: relative;
+        }
+        
+        .calendar {
+            background: #FFF;
+            box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+            position: absolute;
+            z-index: 10;
+            top: 100%;
+            left: 0;
+        }
+        
+        .date-input-fallback {
+            display: none;
+        }
+        
+        .js-no-type-date-support .date-input-native {
+            display: none !important;
+        }
+        
+        .js-no-type-date-support .date-input-fallback {
+            display: inline-block !important;
+        }
+        
+        @media ( min-width: 1025px) {
+            .date-input-fallback {
+                display: inline-block;
+            }
+            .date-input-native {
+                display: none;
+            }
+        }
+
+    </style>
+
+
+    <script>
+        $(document).ready(function() {
+            $('ul.tabs').tabs();
+        });
+
+    </script>
+    <script src="scripts/userPanel.js"></script>
+
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+
+    <header>
+        <nav class="indigo" role="navigation">
+            <div class="nav-wrapper">
+                <!--                Alterar href para a pagina hosteada no bluemix, atualmente é para local-->
+                <a style="margin-left: 20px;" class="breadcrumb" href="/onboarduserp">Suas informações: </a>
+
+                <div style="margin-right: 20px;" id="timestamp" class="right">
+                    <ul class="right hide-on-med-and-down">
+
+                        <li class="breadcrumb">&nbsp; &nbsp;Email: cardoso@br.ibm.com &nbsp;</li>
+                    </ul>
+                    <ul class="right hide-on-med-and-down">
+                        <li class="breadcrumb">&nbsp; Usuario: Francisco Cardoso &nbsp; &nbsp;</li>
+                    </ul>
+                </div>
+
+
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="row">
+
+            <section class="main">
+                <div class="container">
+                    <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
+                        <li class="tab col s3"><a href="#test-swipe-1" class=" black-text text-darken-2">Overview</a></li>
+                        <li class="tab col s3"><a class="black-text text-darken-2" href="#test-swipe-2">Dates</a></li>
+                        <li class="tab col s3"><a href="#test-swipe-3" class="black-text text-darken-2">Names</a></li>
+                        <li class="tab col s3"><a href="#test-swipe-4" class="active black-text text-darken-2">Status</a></li>
+
+                    </ul>
+                    <div class="row">
+                        <!--                       Overview Tab -->
+                        <div class="col-xs-6" id="test-swipe-1">
+
+                            <form action="#" method="post">
+                                <fieldset>
+                                    <!--                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;"> Edite seu projeto</span>-->
+                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
+
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="chip <%= project[showid].status.color %>" style="text-align: right !important;">
+                                         Status do projeto: <%= project[showid].status.name%>
+                                    </div>
+                                    </span>
+                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
+                                             <b style="  font-size: 12px;">Ultima atualização: <%= project[showid].date %></b>
+                                    </span>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label for="formulario">Client Name </label>
+                                            <input type="text" name="customer" class="form-control" value="<%= project[showid].customer %>" readonly>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+
+                                        <div class="col-md-4">
+                                            <label for="formulario">Offer </label>
+                                            <input type="text" name="customer" class="form-control" value="<%= project[showid].title %>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label for="formulario">IMT/Market </label>
+                                            <input type="text" name="imt" class="form-control" value="BR" readonly>
+                                        </div>
+                                    </div>
+
+
+
+                                </fieldset>
+                            </form>
+                        </div>
+                        <!--                        Dates Tab            -->
+                        <div class="col-xs-6" id="test-swipe-2">
+                            <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
+                                <li class="tab col s2"><a href="#test-swipe-7" class=" black-text text-darken-2">CDD</a></li>
+
+                            </ul>
+                            <div class="col-xs-6" id="test-swipe-7">
+
+                                <form action="#" method="post">
+
+                                    <table class="responsive-table striped">
+                                        <thead>
+                                            <tr class=" blue lighten-2" id="tablegr">
+                                                <th id="tablegr">Customer Name: Rommanel</th>
+                                                <th id="tablegr">Phase1(a)</th>
+                                                <th id="tablegr">Phase 1(b)</th>
+                                                <th id="tablegr">Phase 2</th>
+                                                <th id="tablegr">Phase 3</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <td class=" blue lighten-2" id="tablegr">Environments in Phase</td>
+                                                <td id="tablegr">Development</td>
+                                                <td id="tablegr">DEV</td>
+                                                <td id="tablegr"> Quality Assurance</td>
+                                                <td id="tablegr">PRD</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class=" blue lighten-2" id="tablegr">Landscape (applications)</td>
+                                                <td id="tablegr"> ECC (Migration) and PI (New Install)</td>
+                                                <td id="tablegr"> Sol Man 7.2 Install </td>
+                                                <td id="tablegr"> ECC Install</td>
+                                                <td id="tablegr"> ECC (Install) , Process Integrator (Install)</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class=" blue lighten-2" id="tablegr"> # of Instances </td>
+                                                <td id="tablegr">2</td>
+                                                <td id="tablegr">1</td>
+                                                <td id="tablegr">1</td>
+                                                <td id="tablegr">2</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class=" blue lighten-2" id="tablegr"> # of VMs </td>
+                                                <td id="tablegr">2</td>
+                                                <td id="tablegr">1</td>
+                                                <td id="tablegr">0</td>
+                                                <td id="tablegr">2</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class=" blue lighten-2" id="tablegr"># of HANA devices</td>
+                                                <td id="tablegr">0</td>
+                                                <td id="tablegr">0</td>
+                                                <td id="tablegr">0</td>
+                                                <td id="tablegr">0</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class=" blue lighten-2" id="tablegr"># of Databases</td>
+                                                <td id="tablegr">1</td>
+                                                <td id="tablegr">1</td>
+                                                <td id="tablegr">1</td>
+                                                <td id="tablegr">2</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class=" blue lighten-2" id="tablegr">POD Location </td>
+                                                <td id="tablegr">Hortolandia</td>
+                                                <td id="tablegr">Hortolandia</td>
+                                                <td id="tablegr">Hortolandia</td>
+                                                <td id="tablegr"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class=" blue lighten-2" id="tablegr">DR requested (Y/N)</td>
+                                                <td id="tablegr">N</td>
+                                                <td id="tablegr">N</td>
+                                                <td id="tablegr"></td>
+                                                <td id="tablegr"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class=" blue lighten-2" id="tablegr">Requested Delivery Date of each phase </td>
+                                                <td id="tablegr"> 06/01/2017</td>
+                                                <td id="tablegr">06/01/2017</td>
+                                                <td id="tablegr"> 06/12/2017</td>
+                                                <td id="tablegr"> 07/07/2017</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class=" light-green accent-4" id="tablegr">Commited Delivery Date (CDD) by Phase</td>
+                                                <td id="tablegr" class=" light-green accent-4"> 07/03/2017</td>
+                                                <td id="tablegr" class=" light-green accent-4"> 07/11/2017</td>
+                                                <td id="tablegr" class=" light-green accent-4"> 07/18/2017</td>
+                                                <td id="tablegr" class=" light-green accent-4"> 08/01/2017</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td id="tablegr" class="deep-orange darken-4">CDD Expires unless Mutually Signed Order Form with IBM (or equivalent) by</td>
+                                                <td id="tablegr" class="yellow"> 05/25/2017</td>
+                                                <td id="tablegr"> </td>
+                                                <td id="tablegr"> </td>
+                                                <td id="tablegr"> </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td id="tablegr" class="deep-orange darken-4">CDD Expires unless On-boarding Documentation Complete by </td>
+                                                <td id="tablegr" class="yellow"> 05/30/2017</td>
+                                                <td id="tablegr"> </td>
+                                                <td id="tablegr"> </td>
+                                                <td id="tablegr"> </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td id="tablegr" class="deep-orange darken-4">CDD Expires unless Successful Sales to Delivery Hand-Off by </td>
+                                                <td id="tablegr" class="yellow"> 06/01/2017</td>
+                                                <td id="tablegr"> </td>
+                                                <td id="tablegr"> </td>
+                                                <td id="tablegr"> </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                        <!--                                    Names Tab-->
+                        <div class="col-xs-6" id="test-swipe-3">
+                            <form action="#" method="post">
+                                <fieldset>
+                                    <!--                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;"> Edite seu projeto</span>-->
+                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
+
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="chip <%= project[showid].status.color %>" style="text-align: right !important;">
+                                         Status do projeto: <%= project[showid].status.name%>
+                                    </div>
+                                    </span>
+                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
+                                             <b style="  font-size: 12px;">Ultima atualização: <%= project[showid].date %></b>
+                                    </span>
+                                    <!--                                        Seller Row-->
+                                    <div class="row">
+                                        <div class="input-field inline col s3 ">
+                                            <input placeholder="Seller Name" id="name_seller" type="text" class="validate" value="Nome_Vendedor " readonly>
+                                            <label for="name_seller">Seller Name</label>
+                                        </div>
+                                        <div class="input-field inline  col s3">
+                                            <input id="email" type="text" class="validate" value="vendedor@br.ibm.com" readonly>
+                                            <label for="email_seller">Email</label>
+                                        </div>
+                                        <div class="input-field inline  col s3">
+                                            <input id="email" type="text" class="validate" value="vendedor@br.ibm.com" readonly>
+                                            <label for="id_seller">ID Notes</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input id="Phone" type="text" class="validate" value="+5511999999999" readonly>
+                                            <label for="phone_seller">Phone</label>
+                                        </div>
+                                    </div>
+                                    <!--                                        TechSeller Row-->
+                                    <div class="row">
+                                        <div class="input-field inline col s3 ">
+                                            <input placeholder="Tech Seller Name" id="name_seller" type="text" class="validate" readonly value="TechSeller_Name">
+                                            <label for="name_tseller">Tech Seller Name</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input id="email" type="text" class="validate" value="techseller@br.ibm.com" readonly>
+                                            <label for="email_tseller">Email</label>
+                                        </div>
+                                        <div class="input-field inline  col s3">
+                                            <input id="email" type="text" class="validate" value="vendedor@br.ibm.com" readonly>
+                                            <label for="id_seller">ID Notes</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input id="Phone" type="text" class="validate" value="+5511999999999" readonly>
+                                            <label for="phone_tseller">Phone</label>
+                                        </div>
+                                    </div>
+                                    <!--                                        Cloud PM Row -->
+                                    <div class="row">
+                                        <div class="input-field inline col s3 ">
+                                            <input placeholder="Cloud PM Name" id="name_seller" type="text" class="validate" readonly value="CloudPM_Name">
+                                            <label for="name_cp">Cloud PM</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input id="email" type="text" class="validate" value="cloudpm@br.ibm.com" readonly>
+                                            <label for="email_cp">Email</label>
+                                        </div>
+                                        <div class="input-field inline  col s3">
+                                            <input id="email" type="text" class="validate" value="vendedor@br.ibm.com" readonly>
+                                            <label for="id_seller">ID Notes</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input id="Phone" type="text" class="validate" value="+5511999999999" readonly>
+                                            <label for="phone_cp">Phone</label>
+                                        </div>
+                                    </div>
+                                    <!--                                    Local PM row-->
+                                    <div class="row">
+                                        <div class="input-field inline col s3 ">
+                                            <input placeholder="Local PM Name" id="name_seller" type="text" class="validate" readonly value="LocalPM_Name">
+                                            <label for="name_lp">Local PM</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input id="email" type="text" class="validate" value="localpm@br.ibm.com" readonly>
+                                            <label for="email_lp">Email</label>
+                                        </div>
+                                        <div class="input-field inline  col s3">
+                                            <input id="email" type="text" class="validate" value="vendedor@br.ibm.com" readonly>
+                                            <label for="id_seller">ID Notes</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input id="Phone" type="text" class="validate" value="+5511999999999" readonly>
+                                            <label for="phone_lp">Phone</label>
+                                        </div>
+                                    </div>
+                                    <!--                                        Cloud DPE-->
+                                    <div class="row">
+                                        <div class="input-field inline col s3 ">
+                                            <input placeholder="Local DPE Name" id="localdpe_name" type="text" class="validate" readonly value="LocalDPE_Name">
+                                            <label for="name_dpe">Local DPE</label>
+                                        </div>
+                                        <div class="input-field inline  col s3">
+                                            <input id="email" type="text" class="validate" value="localdpe@br.ibm.com" readonly>
+                                            <label for="email_dpe">Email</label>
+                                        </div>
+                                        <div class="input-field inline  col s3">
+                                            <input id="email" type="text" class="validate" value="vendedor@br.ibm.com" readonly>
+                                            <label for="id_seller">ID Notes</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input id="Phone" type="text" class="validate" value="+5511999999999" readonly>
+                                            <label for="phone_dpe">Phone</label>
+                                        </div>
+                                    </div>
+                                    <!--                                        Customer -->
+                                    <div class="row">
+                                        <div class="input-field inline col s3 ">
+                                            <input placeholder="Customer" id="name_seller" type="text" class="validate" readonly value="Customer_Name">
+                                            <label for="name_customer">Customer</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input id="email" type="text" class="validate" value="localpm@br.ibm.com" readonly>
+                                            <label for="email_customer">Email</label>
+                                        </div>
+                                        <div class="input-field inline  col s3">
+                                            <input id="email" type="text" class="validate" value="vendedor@br.ibm.com" readonly>
+                                            <label for="id_seller">ID Notes</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input id="Phone" type="text" class="validate" value="+5511999999999" readonly>
+                                            <label for="phone_customer">Phone</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <!--                                        Status Tab-->
+                        <div class="col-xs-6" id="test-swipe-4">
+                            <form action="#" method="post">
+                                <fieldset>
+                                    <!--                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;"> Edite seu projeto</span>-->
+                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
+
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="chip <%= project[showid].status.color %>" style="text-align: right !important;">
+                                         Status do projeto: <%= project[showid].status.name%>
+                                    </div>
+                                    </span>
+                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
+                                             <b style="  font-size: 12px;">Ultima atualização: <%= project[showid].date %></b>
+                                    </span>
+                                    </span>
+                                    </span>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label for="formulario">Customer </label>
+                                            <input type="text" name="customer" class="form-control" value="<%= project[showid].customer %>" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <label for="formulario">Last Actions </label>
+                                                <textarea class="materialize-textarea" name="story" id="textarea1" readonly><%= project[showid].story %>
+                                            </textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <label for="formulario">G2G </label>
+                                                <input type="text" name="customer" class="form-control" value="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <label for="formulario">Offer </label>
+                                                <input type="text" name="customer" class="form-control" value="C4SAP" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <label for="formulario">Owner </label>
+                                                <input type="text" name="customer" class="form-control" value="Build - Chile GTS - Customer" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <label for="ETA">ETA </label>
+                                                <input type="text" name="date" class="form-control" value="05/01/2017" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <label for="Date">Date </label>
+                                                <input type="text" name="date" class="form-control" value="12/01/2017" readonly>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+            </section>
+
+
+
+
+            </div>
+            <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
+                <a class="btn-floating btn-large waves-effect waves-light indigo" href="/onboarduserp"><i class="material-icons">fast_rewind</i></a>
+            </div>
+    </main>
+
+</body>
+
+</html>

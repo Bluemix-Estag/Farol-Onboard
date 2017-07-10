@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Manage IO</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link href="style/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="style/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="style/picker.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/style/form.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="scripts/materialize.js"></script>
+    <script src="scripts/picker.js"></script>
+    <script src="scripts/example.js"></script>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+
+    <header>
+        <nav class="indigo" role="navigation">
+            <div class="nav-wrapper">
+                <a style="margin-left: 20px;" class="breadcrumb" href="#!">Suas informações: </a>
+
+                <div style="margin-right: 20px;" id="timestamp" class="right">
+                    <ul class="right hide-on-med-and-down">
+                        <li class="breadcrumb">&nbsp; &nbsp; Email: cardoso@br.ibm.com &nbsp;</li>
+                    </ul>
+                    <ul class="right hide-on-med-and-down">
+                        <li class="breadcrumb">&nbsp; Usuario: Francisco Cardoso &nbsp; &nbsp;</li>
+                    </ul>
+                </div>
+
+
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="row">
+            <section class="main">
+                <div class="container">
+                    <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
+                        <li class="tab col s3"><a href="#test-swipe-1" class=" active black-text text-darken-2">Global Projects</a></li>
+                        <li class="tab col s3"><a class="black-text text-darken-2" href="#test-swipe-2">Brazil Projects</a></li>
+                        <li class="tab col s3"><a href="#test-swipe-3" class="black-text text-darken-2">Chile Projects</a></li>
+
+                    </ul>
+                    <div class="row">
+                        <!--                       Global Projects Tab -->
+                        <div class="col-xs-6" id="test-swipe-1">
+
+                            <% if (projects == null){ %>
+
+                                <h4>Voce nao possui projetos, peça um para que ele apareça aqui</h4>
+                                <%} else { %>
+                                    <!-- Page Layout here -->
+                                    <div class="col s0 m0 l2">&nbsp</div>
+
+                                    <!-- Cards container -->
+
+                                    <div class="col s12 m12 l8">
+                                        <div class="row">
+                                            <% for (var key in projects) { %>
+                                                <a href="/onboardprojectInfo?id=<%= key %>">
+
+                                                    <div class="col s12 m6 l4">
+                                                        <!-- Card 1 -->
+
+                                                        <div class="card">
+                                                            <div class="card-content white-text">
+                                                                <img src="https://res.cloudinary.com/dacg0wegv/image/upload/t_media_lib_thumb/v1463989969/squares_dylwo9.png" class="responsive-img" /><br>
+                                                                <span class="indigo-text text-lighten-1"><h5><%= projects[key].title %> </h5></span>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- End of card -->
+                                                    </div>
+                                                </a>
+
+                                                <% } %>
+
+                                        </div>
+
+
+                                        <% } %>
+                                    </div>
+                        </div>
+
+                        <!--                        Brazil Tab            -->
+                        <div class="col-xs-6" id="test-swipe-2">
+                            <!-- Page Layout here -->
+                            <div class="col s0 m0 l2">&nbsp</div>
+
+                            <!-- Cards container -->
+
+                            <div class="col s12 m12 l8">
+                                <div class="row">
+
+                                    <% for (var key in projects) { %>
+
+                                        <% if (projects[key].market == 1 ){ %>
+                                            <a href="/onboardprojectInfo?id=<%= key %>">
+
+                                                <div class="col s12 m6 l4">
+                                                    <!-- Card 1 -->
+
+                                                    <div class="card">
+                                                        <div class="card-content white-text">
+                                                            <img src="https://res.cloudinary.com/dacg0wegv/image/upload/t_media_lib_thumb/v1463989969/squares_dylwo9.png" class="responsive-img" /><br>
+                                                            <span class="indigo-text text-lighten-1"><h5><%= projects[key].title %> </h5></span>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- End of card -->
+                                                </div>
+                                            </a>
+
+                                            <%} else { %>
+                                                <% } %>
+
+
+                                                    <% } %>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!--                                    Mkt Tab-->
+                        <div class="col-xs-6" id="test-swipe-3">
+                            <!-- Page Layout here -->
+                            <div class="col s0 m0 l2">&nbsp</div>
+
+                            <!-- Cards container -->
+
+                            <div class="col s12 m12 l8">
+                                <div class="row">
+
+                                    <% for (var key in projects) { %>
+
+                                        <% if (projects[key].market == 2 ){ %>
+                                            <a href="/onboardprojectInfo?id=<%= key %>">
+
+                                                <div class="col s12 m6 l4">
+                                                    <!-- Card 1 -->
+
+                                                    <div class="card">
+                                                        <div class="card-content white-text">
+                                                            <img src="https://res.cloudinary.com/dacg0wegv/image/upload/t_media_lib_thumb/v1463989969/squares_dylwo9.png" class="responsive-img" /><br>
+                                                            <span class="indigo-text text-lighten-1"><h5><%= projects[key].title %> </h5></span>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- End of card -->
+                                                </div>
+                                            </a>
+
+                                            <%} else { %>
+                                                <% } %>
+
+
+                                                    <% } %>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!--                                        Status Tab-->
+                        <div class="col-xs-6" id="test-swipe-4">
+                        </div>
+
+                    </div>
+            </section>
+
+
+
+            <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
+                <a class="btn-floating btn-large waves-effect waves-light indigo" href="/insert"><i class="material-icons">add</i></a>
+            </div>
+    </main>
+
+</body>
+
+</html>
