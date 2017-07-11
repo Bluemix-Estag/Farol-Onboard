@@ -171,6 +171,12 @@ app.get('/codebakeryuserinfo', function (req, res) {
     });
 })
 
+app.post("/confirminsert", function (req, res) {
+    
+    console.log(JSON.stringify(req.body));
+
+});
+
 app.get('/onboardprojectinfo', function (req, res) {
     var showID = req.query.id;
     sess = req.session;

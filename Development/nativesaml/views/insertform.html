@@ -8,18 +8,23 @@
     <!--Import materialize.css-->
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link href="style/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
     <link href="style/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
-    <link href="style/calendar.css" rel="stylesheet">
-
     <link rel="stylesheet" href="/style/form.css" />
+    <!--    Calendario-->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+    <!--    Fim Calendario-->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xls/0.7.4-a/xls.js"></script>
     <script src="scripts/materialize.js"></script>
-    <script src="scripts/calendar.js"></script>
     <script src="scripts/xls.js"></script>
+
+
+
+
 
 
     <style>
@@ -41,10 +46,6 @@
 
 
     <script>
-        $(function() {
-            $("#datepicker").datepicker();
-        });
-        
         $(document).ready(function() {
             $('ul.tabs').tabs();
         });
@@ -52,11 +53,23 @@
         $(document).ready(function() {
             $('select').material_select();
         });
-        //        $('.datepicker').pickadate({
-        //            selectMonths: true, // Creates a dropdown to control month
-        //            selectYears: 15 // Creates a dropdown of 15 years to control year
-        //        });
-        
+
+        $(function() {
+            $("#calendario").datepicker({
+                dateFormat: 'dd/mm/yy',
+                firstDay: 0
+            })
+            
+                var selecionado = $('#calendario').val();
+;
+            
+    
+            $("#calendario2").datepicker({
+                dateFormat: 'dd/mm/yy',
+                firstDay: 0,
+                minDate: 0
+            })
+        });
 
     </script>
     <script src="scripts/userPanel.js"></script>
@@ -92,222 +105,235 @@
     <main>
         <div class="row">
 
-            <section class="main">
-                <div class="container">
-                    <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
-                        <li class="tab col s3"><a href="#test-swipe-1" class="active black-text text-darken-2">Overview</a></li>
-                        <li class="tab col s3"><a class="black-text text-darken-2" href="#test-swipe-2">Dates</a></li>
-                        <li class="tab col s3"><a href="#test-swipe-3" class="black-text text-darken-2">Names</a></li>
-                        <li class="tab col s3"><a href="#test-swipe-4" class="black-text text-darken-2">Status</a></li>
+            <form action="/confirminsert" method="POST">
+                <section class="main">
+                    <div class="container1">
+                        <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
+                            <li class="tab col s4"><a class="black-text text-darken-2" href="#test-swipe-2">Dates</a></li>
+                            <li class="tab col s4"><a href="#test-swipe-3" class="black-text text-darken-2">Names</a></li>
+                            <li class="tab col s4"><a href="#test-swipe-4" class="black-text text-darken-2">Status</a></li>
 
-                    </ul>
-                    <div class="row">
-                        <!--                       Overview Tab -->
-                        <div class="col-xs-6" id="test-swipe-1">
-                            <form action="#" method="post">
-                                <fieldset>
-                                    <!--                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;"> Edite seu projeto</span>-->
+                        </ul>
+                        <div class="row">
 
+                            <!--                        Dates Tab            -->
+                            <div class="col-xs-8" id="test-swipe-2">
+                                <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
+                                    <li class="tab col s6  light-blue lighten-1" style="border-top: 1px solid black ; "><a href="#test-swipe-7" class=" black-text text-darken-2">CDD</a></li>
+                                    <li class="tab col s6  light-blue lighten-1" style="border-top: 1px solid black ; "><a href="#test-swipe-8" class=" black-text text-darken-2">Date</a></li>
+
+                                </ul>
+                                <div class="col-xs-8" id="test-swipe-7">
+
+                                    <form action="getxls" method="post">
+                                        <input type="file" id="my_file_input" />
+                                        <table class="responsive-table bordered ">
+                                            <tbody id='my_file_output'>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                                <div class="col-xs-8" id="test-swipe-8">
                                     <div class="form-group">
                                         <div class="col-md-4">
-                                            <label for="formulario">Client Name </label>
-                                            <input type="text" name="customer" class="form-control">
-                                        </div>
+                                            <p>Data: <input name="DATE" type="text" id="calendario" /></p>
 
+                                        </div>
                                     </div>
+
+                                    <!--                                        Calendar-->
                                     <div class="form-group">
-
                                         <div class="col-md-4">
-                                            <label for="formulario">Offer </label>
-                                            <input type="text" name="customer" class="form-control">
+
+                                            <p>ETA: <input name="eta" type="text" id="calendario2" /></p>
+
                                         </div>
                                     </div>
-                                    <div class="form-group ">
-                                        <label>Market Select</label>
-                                        <select class="browser-default">
-                                        <option value="" disabled selected>Choose your option</option>
-                                            <option value="1">Brazil</option>
-                                            <option value="2">SSA</option>
-                                            <option value="3">Mexico</option>
-                                        </select>
-                                    </div>
+                                </div>
+                            </div>
 
-
-
-                                </fieldset>
-                            </form>
-                        </div>
-                        <!--                        Dates Tab            -->
-
-                        <div class="col-xs-6" id="test-swipe-2">
-                            <form action="getxls" method="post">
-                                <input type="file" id="my_file_input" />
-                                <table class="responsive-table bordered ">
-                                    <tbody id='my_file_output'>
-                                    </tbody>
-                                </table>
-                            </form>
-                        </div>
-                        <!--                                    Names Tab-->
-                        <div class="col-xs-6" id="test-swipe-3">
-                            <form action="#" method="post">
+                            <!--                                    Names Tab-->
+                            <div class="col-xs-6" id="test-swipe-3">
                                 <fieldset>
                                     <!--                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;"> Edite seu projeto</span>-->
 
                                     <!--                                        Seller Row-->
                                     <div class="row">
-                                        <div class="input-field inline col s4 ">
-                                            <input placeholder="Seller Name" id="name_seller" type="text" class="validate">
+                                        <div class="input-field inline col s3">
+                                            <input name="name_seller" placeholder="Seller Name" id="name_seller" type="text" class="validate">
                                             <label for="name_seller">Seller Name</label>
                                         </div>
-                                        <div class="input-field inline  col s4">
-                                            <input id="email" type="text" class="validate">
+                                        <div class="input-field inline  col s3">
+                                            <input name="email_seller" id="email" type="text" class="validate">
                                             <label for="email_seller">Email</label>
                                         </div>
-                                        <div class="input-field inline col s4">
-                                            <input id="Phone" type="text" class="validate">
+                                        <div class="input-field inline col s3">
+                                            <input name="idnotes_seller" id="idnotes_seller" type="text" class="validate">
+                                            <label for="idnotes_seller">ID Notes</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input name="phone_seller" id="Phone" type="text" class="validate">
                                             <label for="phone_seller">Phone</label>
                                         </div>
                                     </div>
                                     <!--                                        TechSeller Row-->
                                     <div class="row">
-                                        <div class="input-field inline col s4 ">
-                                            <input placeholder="Tech Seller Name" id="name_seller" type="text" class="validate">
+                                        <div class="input-field inline col s3">
+                                            <input name="name_tseller" placeholder="Tech Seller Name" id="name_seller" type="text" class="validate">
                                             <label for="name_tseller">Tech Seller Name</label>
                                         </div>
-                                        <div class="input-field inline  col s4">
-                                            <input id="email" type="text" class="validate">
+                                        <div class="input-field inline  col s3">
+                                            <input name="email_tseller" id="email" type="text" class="validate">
                                             <label for="email_tseller">Email</label>
                                         </div>
-                                        <div class="input-field inline col s4">
-                                            <input id="Phone" type="text" class="validate">
+                                        <div class="input-field inline col s3">
+                                            <input name="idnotes_techseller" id="idnotes_techseller" type="text" class="validate">
+                                            <label for="idnotes_techseller">ID Notes</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input name="phone_tseller" id="Phone" type="text" class="validate">
                                             <label for="phone_tseller">Phone</label>
                                         </div>
                                     </div>
                                     <!--                                        Cloud PM Row -->
                                     <div class="row">
-                                        <div class="input-field inline col s4 ">
-                                            <input placeholder="Cloud PM Name" id="name_seller" type="text" class="validate">
+                                        <div class="input-field inline col s3">
+                                            <input name="name_cp" placeholder="Cloud PM Name" id="name_seller" type="text" class="validate">
                                             <label for="name_cp">Cloud PM</label>
                                         </div>
-                                        <div class="input-field inline  col s4">
-                                            <input id="email" type="text" class="validate">
+                                        <div class="input-field inline  col s3">
+                                            <input name="email_cp" id="email" type="text" class="validate">
                                             <label for="email_cp">Email</label>
                                         </div>
-                                        <div class="input-field inline col s4">
-                                            <input id="Phone" type="text" class="validate">
+                                        <div class="input-field inline col s3">
+                                            <input name="idnotes_cloudpm" id="idnotes_cloudpm" type="text" class="validate">
+                                            <label for="idnotes_cloudpm">ID Notes</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input name="phone_cp" id="Phone" type="text" class="validate">
                                             <label for="phone_cp">Phone</label>
                                         </div>
                                     </div>
                                     <!--                                    Local PM row-->
                                     <div class="row">
-                                        <div class="input-field inline col s4 ">
-                                            <input placeholder="Local PM Name" id="name_seller" type="text" class="validate">
+                                        <div class="input-field inline col s3 ">
+                                            <input name="name_lp" placeholder="Local PM Name" id="name_seller" type="text" class="validate">
                                             <label for="name_lp">Local PM</label>
                                         </div>
-                                        <div class="input-field inline  col s4">
-                                            <input id="email" type="text" class="validate">
+                                        <div class="input-field inline  col s3">
+                                            <input name="email_lp" id="email" type="text" class="validate">
                                             <label for="email_lp">Email</label>
                                         </div>
-                                        <div class="input-field inline col s4">
-                                            <input id="Phone" type="text" class="validate">
+                                        <div class="input-field inline col s3">
+                                            <input name="idnotes_localpm" id="idnotes_localpm" type="text" class="validate">
+                                            <label for="idnotes_localpm">ID Notes</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input name="phone_lp" id="Phone" type="text" class="validate">
                                             <label for="phone_lp">Phone</label>
                                         </div>
                                     </div>
                                     <!--                                        Cloud DPE-->
                                     <div class="row">
-                                        <div class="input-field inline col s4 ">
-                                            <input placeholder="Local DPE Name" id="localdpe_name" type="text" class="validate">
+                                        <div class="input-field inline col s3">
+                                            <input name="name_dpe" placeholder="Local DPE Name" id="localdpe_name" type="text" class="validate">
                                             <label for="name_dpe">Local DPE</label>
                                         </div>
-                                        <div class="input-field inline  col s4">
-                                            <input id="email" type="text" class="validate">
+                                        <div class="input-field inline  col s3">
+                                            <input name="email_dpe" id="email" type="text" class="validate">
                                             <label for="email_dpe">Email</label>
                                         </div>
-                                        <div class="input-field inline col s4">
-                                            <input id="Phone" type="text" class="validate">
+                                        <div class="input-field inline col s3">
+                                            <input name="idnotes_dpe" id="idnotes_dpe" type="text" class="validate">
+                                            <label for="idnotes_dpe">ID Notes</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input name="phone_dpe" id="Phone" type="text" class="validate">
                                             <label for="phone_dpe">Phone</label>
                                         </div>
                                     </div>
                                     <!--                                        Customer -->
                                     <div class="row">
-                                        <div class="input-field inline col s4 ">
-                                            <input placeholder="Customer" id="name_seller" type="text" class="validate">
+
+                                        <div class="input-field inline col s3">
+                                            <input placeholder="Customer" name="name_customer" id="name_customer" type="text" class="validate">
                                             <label for="name_customer">Customer</label>
                                         </div>
-                                        <div class="input-field inline  col s4">
-                                            <input id="email" type="text" class="validate">
+                                        <div class="input-field inline  col s3">
+                                            <input name="email_customer" id="email" type="text" class="validate">
                                             <label for="email_customer">Email</label>
                                         </div>
-                                        <div class="input-field inline col s4">
-                                            <input id="Phone" type="text" class="validate">
+                                        <div class="input-field inline col s3">
+                                            <input name="idnotes_customer" id="idnotes_customer" type="text" class="validate">
+                                            <label for="idnotes_customer">ID Notes</label>
+                                        </div>
+                                        <div class="input-field inline col s3">
+                                            <input name="phone_customer" id="phone_customer" type="text" class="validate">
                                             <label for="phone_customer">Phone</label>
                                         </div>
                                     </div>
                                 </fieldset>
-                            </form>
-                        </div>
-                        <!--                                        Status Tab-->
-                        <div class="col-xs-6" id="test-swipe-4">
-                            <form action="#" method="post">
+                            </div>
+                            <!--                                        Status Tab-->
+                            <div class="col-xs-6" id="test-swipe-4">
                                 <fieldset>
                                     <!--                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;"> Edite seu projeto</span>-->
                                     <div class="form-group">
+                                        <div class="form-group ">
+                                            <label>Market Select</label>
+                                            <select name="market" class="browser-default">
+                                        <option value="" disabled selected>Choose project market</option>
+                                            <option value="brazil">Brazil</option>
+                                            <option value="ssa">SSA</option>
+                                            <option value="mexico">Mexico</option>
+                                        </select>
+                                        </div>
                                         <div class="col-md-4">
                                             <label for="formulario">Customer </label>
-                                            <input type="text" name="customer" class="form-control">
+                                            <input type="text" name="customer" class="form-control" required>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-4">
                                                 <label for="formulario">Last Actions </label>
-                                                <textarea class="materialize-textarea" name="story" id="textarea1">
+                                                <textarea class="materialize-textarea" name="story" id="textarea1" required>
                                             </textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-4">
                                                 <label for="formulario">G2G </label>
-                                                <input type="text" name="customer" class="form-control" value="">
+                                                <input type="text" name="g2g" class="form-control" value="" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-4">
                                                 <label for="formulario">Offer </label>
-                                                <input type="text" name="customer" class="form-control" value="">
+                                                <input type="text" name="offer" class="form-control" value="" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-4">
                                                 <label for="formulario">Owner </label>
-                                                <input type="text" name="customer" class="form-control" </div>
+                                                <input type="text" name="owner" class="form-control" required/>
                                             </div>
-                                            <div class="form-group">
-                                                <div class="col-md-4">
-                                                    <label for="ETA">ETA </label>
-                                                    <input type="text" name="date" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <p>Date: <input type="text" id="datepicker"></p>
-                                            </div>
-
-
-
-
+                                        </div>
+                                    </div>
                                 </fieldset>
-                            </form>
                             </div>
+                        </div>
+                        <input type="submit" value="Submit" class="waves-effect waves-light btn indigo">
 
-                            </div>
-            </section>
+                    </div>
+                </section>
+            </form>
 
 
 
 
-            </div>
-            <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
-                <a class="btn-floating btn-large waves-effect waves-light indigo" href="/onboarduserp"><i class="material-icons">fast_rewind</i></a>
-            </div>
+        </div>
+        <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large waves-effect waves-light indigo" href="/onboarduserp"><i class="material-icons">fast_rewind</i></a>
+        </div>
     </main>
 
 </body>
