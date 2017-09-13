@@ -12,7 +12,7 @@
     <link href="style/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
     <link rel="stylesheet" href="/style/form.css" />
     <link rel="stylesheet" href="/style/timeline.css" />
-    
+
     <link rel="stylesheet" href="/style/tabs.css" />
 
 
@@ -89,17 +89,16 @@
 
     <header>
         <script>
-            
-            $(document).ready(function(){
+            $(document).ready(function() {
                 var obj = (getSession('userInfo'));
-                
-                document.getElementById('emailUser').innerHTML = "&nbsp; &nbsp; Email: &nbsp;" + obj.emailaddress ;
+
+                document.getElementById('emailUser').innerHTML = "&nbsp; &nbsp; Email: &nbsp;" + obj.emailaddress;
                 document.getElementById('nameUser').innerHTML = "&nbsp; Usuario: &nbsp; &nbsp;" + obj.cn;
 
             })
-            
+
         </script>
-        
+
         <nav class="pushpin-demo-nav pinned blue darken-4" role="navigation" style="z-index: 999999 !important;">
             <div class="nav-wrapper">
                 <!--                Alterar href para a pagina hosteada no bluemix, atualmente é para local-->
@@ -119,7 +118,6 @@
                     <li class="tab col s2"><a href="#test-swipe-3" class="black-text text-darken-2">Names</a></li>
                     <li class="tab col s2"><a href="#test-swipe-4" class="black-text text-darken-2">Status</a></li>
                     <li class="tab col s2"><a href="#swipe-historic" class="black-text text-darken-2">Historic</a></li>
-                    <li class="tab col s2"><a href="#swipe-delete" class="black-text text-darken-2">Delete</a></li>
                 </ul>
             </div>
         </nav>
@@ -129,17 +127,6 @@
         <div class="row">
             <section class="main">
                 <div class="container1">
-                    <!--
-                    <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
-                        <li class="tab col s2"><a href="#test-swipe-1" class=" black-text text-darken-2">Overview</a></li>
-                        <li class="tab col s2"><a class="black-text text-darken-2" href="#test-swipe-2">Dates</a></li>
-                        <li class="tab col s2"><a href="#test-swipe-3" class="black-text text-darken-2">Names</a></li>
-                        <li class="tab col s2"><a href="#test-swipe-4" class="active black-text text-darken-2">Status</a></li>
-                        <li class="tab col s2"><a href="#swipe-delete" class="black-text text-darken-2">Delete</a></li>
-                        
-
-                    </ul>
--->
                     <div class="row">
                         <!--                        Historic Tab -->
                         <div class="col-xs-6" id="swipe-historic">
@@ -157,27 +144,27 @@
                                         <form action="#" method="post">
                                             <fieldset>
                                                 <section id="cd-timeline" class="cd-container">
-                                            
-                                                            <h2>Update at:
-                                                                <%= project.history[key].lastUpdated %>
-                                                            </h2>
-                                                            <p>
-                                                                <b> Situation was </b> 
-                                                                <span class="circle <%= project.history[key].situation %> large "></span>
-                                                            </p>
-                                                            <p>
-                                                                <b>Last Actions: </b>
-                                                                <%= project.history[key].story %>
-                                                            </p>
-                                                            <p>
-                                                                <b>G2G: </b>
-                                                                <%= project.history[key].g2g %>
-                                                            </p>
-                                                            <p>
-                                                                <b>Owner: </b>
-                                                                <%= project.history[key].owner %>
-                                                            </p>
-                                                        <!-- cd-timeline-content -->
+
+                                                    <h2>Update at:
+                                                        <%= project.history[key].lastUpdated %>
+                                                    </h2>
+                                                    <p>
+                                                        <b> Situation was </b>
+                                                        <span class="circle <%= project.history[key].situation %> large "></span>
+                                                    </p>
+                                                    <p>
+                                                        <b>Last Actions: </b>
+                                                        <%= project.history[key].story %>
+                                                    </p>
+                                                    <p>
+                                                        <b>G2G: </b>
+                                                        <%= project.history[key].g2g %>
+                                                    </p>
+                                                    <p>
+                                                        <b>Owner: </b>
+                                                        <%= project.history[key].owner %>
+                                                    </p>
+                                                    <!-- cd-timeline-content -->
                                                     <!-- cd-timeline-block -->
                                                 </section>
                                                 <!-- cd-timeline -->
@@ -199,38 +186,17 @@
                     </div>
 
                 </div>
-                <!--                        Delete Tab -->
-                <div class="col-xs-6" id="swipe-delete">
-                    <fieldset>
-                    <form action="/deleteproject?id=<%= project.id %> " method="post">
-                            <button value="Delete Project" class="waves-effect waves-light btn blue darken-4" onclick="return confirm('Are you sure you want to delete this project?');" style="cursor:pointer;">Delete Project</button>
-                    </form>
-                    <form action="/closeproject?id=<%= project.id %>" method="post">
-                            <input type="hidden" name="closedBy" id="nameUser" />
-                            <input type="hidden" name="rev" value="<%= project %>"/>
-                            <button value="Close Project" class="waves-effect waves-light btn blue darken-4" onclick="return confirm('Are you sure you want to close this project?');" style="cursor:pointer;">Close Project</button>    
-                    
-                    </form>
 
-                    </fieldset>
-                </div>
                 <!--                       Overview Tab -->
                 <div class="col-xs-6" id="test-swipe-1">
 
                     <form action="#" method="post">
                         <fieldset>
                             <!--                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;"> Edite seu projeto</span>-->
-
-
-                            <span class="card-title" style="text-align: center !important; font-size: 12pt !important;">
-                                        <b style="  font-size: 12px;">Last Updated at: <%=             project.lastUpdated %> &nbsp;&nbsp;&nbsp;With Status:  <span class="circle 
-                                                                        
-                                                                        <%= project.situation %> "></span> </b>
-                            </span>
                             <div class="form-group">
                                 <div class="col-md-4">
                                     <label for="formulario">Client Name </label>
-                                    <input type="text" name="customer" class="form-control" value="<%= project.customer %>" readonly>
+                                    <input type="text" name="customer" class="form-control" value="<%= project.history[0].customer %>" readonly>
                                 </div>
 
                             </div>
@@ -238,20 +204,20 @@
 
                                 <div class="col-md-4">
                                     <label for="formulario">Offer </label>
-                                    <input type="text" name="customer" class="form-control" value="<%= project.offer %>" readonly>
+                                    <input type="text" name="customer" class="form-control" value="<%= project.history[0].offer %>" readonly>
                                 </div>
-                                
+
                             </div>
                             <div class="form-group">
                                 <div class="col-md-4">
                                     <label for="formulario">Customer </label>
-                                    <input type="text" name="customer" class="form-control" value="<%= project.customer %>" readonly>
+                                    <input type="text" name="customer" class="form-control" value="<%= project.history[0].customer %>" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-4">
                                     <label for="formulario">IMT/Market </label>
-                                    <input type="text" name="imt" class="form-control" value="<%= (project.market).toUpperCase() %>" readonly>
+                                    <input type="text" name="imt" class="form-control" value="<%= (project.history[0].market).toUpperCase() %>" readonly>
                                 </div>
                             </div>
 
@@ -274,9 +240,9 @@
                             <table class="responsive-table striped">
                                 <thead>
                                     <tr class=" blue lighten-2" id="tablegr">
-                                        <% for (var cdd0 in project.cdd0) { %>
+                                        <% for (var cdd0 in project.history[0].cdd0) { %>
                                             <th id="tablegr">
-                                                <%= project.cdd0[cdd0]%>
+                                                <%= project.history[0].cdd0[cdd0]%>
                                             </th>
                                             <% } %>
                                     </tr>
@@ -284,16 +250,16 @@
 
                                 <tbody>
                                     <tr>
-                                        <% for (var key in project.cdd1) { %>
+                                        <% for (var key in project.history[0].cdd1) { %>
 
                                             <% if (key == 0 ) { %>
                                                 <td class=" blue lighten-2" id="tablegr">
-                                                    <%= project.cdd1[key] %>
+                                                    <%= project.history[0].cdd1[key] %>
                                                 </td>
                                                 <% } else {%>
 
                                                     <td id="tablegr">
-                                                        <%= project.cdd1[key] %>
+                                                        <%= project.history[0].cdd1[key] %>
                                                     </td>
                                                     <% } %>
                                                         <% } %>
@@ -301,192 +267,192 @@
 
                                     </tr>
                                     <tr>
-                                        <% for (var key in project.cdd2) { %>
+                                        <% for (var key in project.history[0].cdd2) { %>
 
                                             <% if (key == 0 ) { %>
                                                 <td class=" blue lighten-2" id="tablegr">
-                                                    <%= project.cdd2[key] %>
+                                                    <%= project.history[0].cdd2[key] %>
                                                 </td>
                                                 <% } else {%>
 
                                                     <td id="tablegr">
-                                                        <%= project.cdd2[key] %>
+                                                        <%= project.history[0].cdd2[key] %>
                                                     </td>
                                                     <% } %>
                                                         <% } %>
 
                                     </tr>
                                     <tr>
-                                        <% for (var key in project.cdd3) { %>
+                                        <% for (var key in project.history[0].cdd3) { %>
 
                                             <% if (key == 0 ) { %>
                                                 <td class=" blue lighten-2" id="tablegr">
-                                                    <%= project.cdd3[key] %>
+                                                    <%= project.history[0].cdd3[key] %>
                                                 </td>
                                                 <% } else {%>
 
                                                     <td id="tablegr">
-                                                        <%= project.cdd3[key] %>
+                                                        <%= project.history[0].cdd3[key] %>
                                                     </td>
                                                     <% } %>
                                                         <% } %>
 
                                     </tr>
                                     <tr>
-                                        <% for (var key in project.cdd4) { %>
+                                        <% for (var key in project.history[0].cdd4) { %>
 
                                             <% if (key == 0 ) { %>
                                                 <td class=" blue lighten-2" id="tablegr">
-                                                    <%= project.cdd4[key] %>
+                                                    <%= project.history[0].cdd4[key] %>
                                                 </td>
                                                 <% } else {%>
 
                                                     <td id="tablegr">
-                                                        <%= project.cdd4[key] %>
+                                                        <%= project.history[0].cdd4[key] %>
                                                     </td>
                                                     <% } %>
                                                         <% } %>
 
                                     </tr>
                                     <tr>
-                                        <% for (var key in project.cdd5) { %>
+                                        <% for (var key in project.history[0].cdd5) { %>
 
                                             <% if (key == 0 ) { %>
                                                 <td class=" blue lighten-2" id="tablegr">
-                                                    <%= project.cdd5[key] %>
+                                                    <%= project.history[0].cdd5[key] %>
                                                 </td>
                                                 <% } else {%>
 
                                                     <td id="tablegr">
-                                                        <%= project.cdd5[key] %>
+                                                        <%= project.history[0].cdd5[key] %>
                                                     </td>
                                                     <% } %>
                                                         <% } %>
 
                                     </tr>
                                     <tr>
-                                        <% for (var key in project.cdd6) { %>
+                                        <% for (var key in project.history[0].cdd6) { %>
 
                                             <% if (key == 0 ) { %>
                                                 <td class=" blue lighten-2" id="tablegr">
-                                                    <%= project.cdd6[key] %>
+                                                    <%= project.history[0].cdd6[key] %>
                                                 </td>
                                                 <% } else {%>
 
                                                     <td id="tablegr">
-                                                        <%= project.cdd6[key] %>
+                                                        <%= project.history[0].cdd6[key] %>
                                                     </td>
                                                     <% } %>
                                                         <% } %>
 
                                     </tr>
                                     <tr>
-                                        <% for (var key in project.cdd7) { %>
+                                        <% for (var key in project.history[0].cdd7) { %>
 
                                             <% if (key == 0 ) { %>
                                                 <td class=" blue lighten-2" id="tablegr">
-                                                    <%= project.cdd7[key] %>
+                                                    <%= project.history[0].cdd7[key] %>
                                                 </td>
                                                 <% } else {%>
 
                                                     <td id="tablegr">
-                                                        <%= project.cdd7[key] %>
+                                                        <%= project.history[0].cdd7[key] %>
                                                     </td>
                                                     <% } %>
                                                         <% } %>
 
                                     </tr>
                                     <tr>
-                                        <% for (var key in project.cdd8) { %>
+                                        <% for (var key in project.history[0].cdd8) { %>
 
                                             <% if (key == 0 ) { %>
                                                 <td class=" blue lighten-2" id="tablegr">
-                                                    <%= project.cdd8[key] %>
+                                                    <%= project.history[0].cdd8[key] %>
                                                 </td>
                                                 <% } else {%>
 
                                                     <td id="tablegr">
-                                                        <%= project.cdd8[key] %>
+                                                        <%= project.history[0].cdd8[key] %>
                                                     </td>
                                                     <% } %>
                                                         <% } %>
 
                                     </tr>
                                     <tr>
-                                        <% for (var key in project.cdd9) { %>
+                                        <% for (var key in project.history[0].cdd9) { %>
 
                                             <% if (key == 0 ) { %>
                                                 <td class=" blue lighten-2" id="tablegr">
-                                                    <%= project.cdd9[key] %>
+                                                    <%= project.history[0].cdd9[key] %>
                                                 </td>
                                                 <% } else {%>
 
                                                     <td id="tablegr">
-                                                        <%= project.cdd9[key] %>
+                                                        <%= project.history[0].cdd9[key] %>
                                                     </td>
                                                     <% } %>
                                                         <% } %>
 
                                     </tr>
                                     <tr>
-                                        <% for (var key in project.cdd10) { %>
+                                        <% for (var key in project.history[0].cdd10) { %>
 
                                             <% if (key == 0 ) { %>
                                                 <td class=" light-green accent-3" id="tablegr">
-                                                    <%= project.cdd10[key] %>
+                                                    <%= project.history[0].cdd10[key] %>
                                                 </td>
                                                 <% } else {%>
 
                                                     <td id="tablegr">
-                                                        <%= project.cdd10[key] %>
+                                                        <%= project.history[0].cdd10[key] %>
                                                     </td>
                                                     <% } %>
                                                         <% } %>
 
                                     </tr>
                                     <tr>
-                                        <% for (var key in project.cdd11) { %>
+                                        <% for (var key in project.history[0].cdd11) { %>
 
                                             <% if (key == 0 ) { %>
                                                 <td class="red darken-4" id="tablegr">
-                                                    <%= project.cdd11[key] %>
+                                                    <%= project.history[0].cdd11[key] %>
                                                 </td>
                                                 <% } else {%>
 
                                                     <td id="tablegr" class=" lime accent-2">
-                                                        <%= project.cdd11[key] %>
+                                                        <%= project.history[0].cdd11[key] %>
                                                     </td>
                                                     <% } %>
                                                         <% } %>
 
                                     </tr>
                                     <tr>
-                                        <% for (var key in project.cdd12) { %>
+                                        <% for (var key in project.history[0].cdd12) { %>
 
                                             <% if (key == 0 ) { %>
                                                 <td class=" red darken-4" id="tablegr">
-                                                    <%= project.cdd12[key] %>
+                                                    <%= project.history[0].cdd12[key] %>
                                                 </td>
                                                 <% } else {%>
 
                                                     <td id="tablegr" class=" lime accent-2">
-                                                        <%= project.cdd12[key] %>
+                                                        <%= project.history[0].cdd12[key] %>
                                                     </td>
                                                     <% } %>
                                                         <% } %>
 
                                     </tr>
                                     <tr>
-                                        <% for (var key in project.cdd13) { %>
+                                        <% for (var key in project.history[0].cdd13) { %>
 
                                             <% if (key == 0 ) { %>
                                                 <td class="red darken-4" id="tablegr">
-                                                    <%= project.cdd13[key] %>
+                                                    <%= project.history[0].cdd13[key] %>
                                                 </td>
                                                 <% } else {%>
 
                                                     <td id="tablegr" class=" lime accent-2">
-                                                        <%= project.cdd13[key] %>
+                                                        <%= project.history[0].cdd13[key] %>
                                                     </td>
                                                     <% } %>
                                                         <% } %>
@@ -520,102 +486,94 @@
                 <div class="col-xs-6" id="test-swipe-3">
                     <form action="#" method="post">
                         <fieldset>
-                            <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
-
-                                    </span>
-                            <span class="card-title" style="text-align: center !important; font-size: 12pt !important;">
-                                        <b style="  font-size: 12px;">Last Updated at: <%=             project.lastUpdated %> &nbsp;&nbsp;&nbsp;With Status:  <span class="circle 
-                                                                        
-                                                                        <%= project.situation %> "></span> </b>
-                            </span>
                             <!--                                        Seller Row-->
                             <div class="row">
                                 <div class="input-field inline col s3 ">
-                                    <input placeholder="Seller Name" id="name_seller" type="text" class="validate" value="<%= project.names.seller.name %>" readonly>
+                                    <input placeholder="Seller Name" id="name_seller" type="text" class="validate" value="<%= project.history[0].names.seller.name %>" readonly>
                                 </div>
                                 <div class="input-field inline  col s3">
-                                    <input id="email" type="text" class="validate" value="<%= project.names.seller.email %>" readonly>
+                                    <input id="email" type="text" class="validate" value="<%= project.history[0].names.seller.email %>" readonly>
                                 </div>
                                 <div class="input-field inline  col s3">
-                                    <input id="idnotes" type="text" class="validate" value="<%= project.names.seller.idnotes %> " readonly>
+                                    <input id="idnotes" type="text" class="validate" value="<%= project.history[0].names.seller.idnotes %> " readonly>
                                 </div>
                                 <div class="input-field inline col s3">
-                                    <input id="Phone" type="text" class="validate" value="<%= project.names.seller.phone %> " readonly>
+                                    <input id="Phone" type="text" class="validate" value="<%= project.history[0].names.seller.phone %> " readonly>
                                 </div>
                             </div>
                             <!--                                        TechSeller Row-->
                             <div class="row">
                                 <div class="input-field inline col s3 ">
-                                    <input placeholder="Tech Seller Name" id="name_seller" type="text" class="validate" readonly value="<%= project.names.techseller.name %> ">
+                                    <input placeholder="Tech Seller Name" id="name_seller" type="text" class="validate" readonly value="<%= project.history[0].names.techseller.name %> ">
                                 </div>
                                 <div class="input-field inline col s3">
-                                    <input id="email" type="text" class="validate" value="<%= project.names.techseller.email %>" readonly>
+                                    <input id="email" type="text" class="validate" value="<%= project.history[0].names.techseller.email %>" readonly>
                                 </div>
                                 <div class="input-field inline  col s3">
-                                    <input id="idnotes" type="text" class="validate" value="<%= project.names.techseller.idnotes %>" readonly>
+                                    <input id="idnotes" type="text" class="validate" value="<%= project.history[0].names.techseller.idnotes %>" readonly>
                                 </div>
                                 <div class="input-field inline col s3">
-                                    <input id="Phone" type="text" class="validate" value="<%= project.names.seller.phone %>" readonly>
+                                    <input id="Phone" type="text" class="validate" value="<%= project.history[0].names.seller.phone %>" readonly>
                                 </div>
                             </div>
                             <!--                                        Cloud PM Row -->
                             <div class="row">
                                 <div class="input-field inline col s3 ">
-                                    <input placeholder="Cloud PM Name" id="name_seller" type="text" class="validate" readonly value="<%= project.names.cloudpm.name %>">
+                                    <input placeholder="Cloud PM Name" id="name_seller" type="text" class="validate" readonly value="<%= project.history[0].names.cloudpm.name %>">
                                 </div>
                                 <div class="input-field inline col s3">
-                                    <input id="email" type="text" class="validate" value="<%= project.names.cloudpm.email %>" readonly>
+                                    <input id="email" type="text" class="validate" value="<%= project.history[0].names.cloudpm.email %>" readonly>
                                 </div>
                                 <div class="input-field inline  col s3">
-                                    <input id="idnotes" type="text" class="validate" value="<%= project.names.cloudpm.idnotes %>" readonly>
+                                    <input id="idnotes" type="text" class="validate" value="<%= project.history[0].names.cloudpm.idnotes %>" readonly>
                                 </div>
                                 <div class="input-field inline col s3">
-                                    <input id="Phone" type="text" class="validate" value="<%= project.names.seller.phone %>" readonly>
+                                    <input id="Phone" type="text" class="validate" value="<%= project.history[0].names.seller.phone %>" readonly>
                                 </div>
                             </div>
                             <!--                                    Local PM row-->
                             <div class="row">
                                 <div class="input-field inline col s3 ">
-                                    <input placeholder="Local PM Name" id="name_seller" type="text" class="validate" readonly value="<%= project.names.localpm.name %>">
+                                    <input placeholder="Local PM Name" id="name_seller" type="text" class="validate" readonly value="<%= project.history[0].names.localpm.name %>">
                                 </div>
                                 <div class="input-field inline col s3">
-                                    <input id="email" type="text" class="validate" value="<%= project.names.localpm.email %>" readonly>
+                                    <input id="email" type="text" class="validate" value="<%= project.history[0].names.localpm.email %>" readonly>
                                 </div>
                                 <div class="input-field inline  col s3">
-                                    <input id="idnotes" type="text" class="validate" value="<%= project.names.localpm.idnotes %>" readonly>
+                                    <input id="idnotes" type="text" class="validate" value="<%= project.history[0].names.localpm.idnotes %>" readonly>
                                 </div>
                                 <div class="input-field inline col s3">
-                                    <input id="Phone" type="text" class="validate" value="<%= project.names.seller.phone %>" readonly>
+                                    <input id="Phone" type="text" class="validate" value="<%= project.history[0].names.seller.phone %>" readonly>
                                 </div>
                             </div>
                             <!--                                        Cloud DPE-->
                             <div class="row">
                                 <div class="input-field inline col s3 ">
-                                    <input placeholder="Local DPE Name" id="localdpe_name" type="text" class="validate" readonly value="<%= project.names.cloudpe.name %>">
+                                    <input placeholder="Local DPE Name" id="localdpe_name" type="text" class="validate" readonly value="<%= project.history[0].names.cloudpe.name %>">
                                 </div>
                                 <div class="input-field inline  col s3">
-                                    <input id="email" type="text" class="validate" value="<%= project.names.cloudpe.email %>" readonly>
+                                    <input id="email" type="text" class="validate" value="<%= project.history[0].names.cloudpe.email %>" readonly>
                                 </div>
                                 <div class="input-field inline  col s3">
-                                    <input id="idnotes" type="text" class="validate" value="<%= project.names.cloudpe.idnotes %>" readonly>
+                                    <input id="idnotes" type="text" class="validate" value="<%= project.history[0].names.cloudpe.idnotes %>" readonly>
                                 </div>
                                 <div class="input-field inline col s3">
-                                    <input id="Phone" type="text" class="validate" value="<%= project.names.seller.phone %>" readonly>
+                                    <input id="Phone" type="text" class="validate" value="<%= project.history[0].names.seller.phone %>" readonly>
                                 </div>
                             </div>
                             <!--                                        Customer -->
                             <div class="row">
                                 <div class="input-field inline col s3 ">
-                                    <input placeholder="Customer" id="name_seller" type="text" class="validate" readonly value="<%= project.names.customer.name %>">
+                                    <input placeholder="Customer" id="name_seller" type="text" class="validate" readonly value="<%= project.history[0].names.customer.name %>">
                                 </div>
                                 <div class="input-field inline col s3">
-                                    <input id="email" type="text" class="validate" value="<%= project.names.customer.email %>" readonly>
+                                    <input id="email" type="text" class="validate" value="<%= project.history[0].names.customer.email %>" readonly>
                                 </div>
                                 <div class="input-field inline  col s3">
-                                    <input id="idnotes" type="text" class="validate" value="<%= project.names.customer.idnotes %>" readonly>
+                                    <input id="idnotes" type="text" class="validate" value="<%= project.history[0].names.customer.idnotes %>" readonly>
                                 </div>
                                 <div class="input-field inline col s3">
-                                    <input id="Phone" type="text" class="validate" value="<%= project.names.seller.phone %>" readonly>
+                                    <input id="Phone" type="text" class="validate" value="<%= project.history[0].names.seller.phone %>" readonly>
                                 </div>
                             </div>
                         </fieldset>
@@ -626,42 +584,32 @@
                     <form action="#" method="post">
                         <fieldset>
                             <!--                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;"> Edite seu projeto</span>-->
-                            <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
 
-                                    
-                                    </span>
-                            <span class="card-title" style="text-align: center !important; font-size: 12pt !important;">
-                                        <b style="  font-size: 12px;">Last Updated at: <%=             project.lastUpdated %> &nbsp;&nbsp;&nbsp;With Status:  <span class="circle 
-                                                                        
-                                                                        <%= project.situation %> "></span> </b>
-                            </span>
-                            </span>
-                            </span>
                             <div class="form-group">
-                                
+
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         <label for="formulario">Last Actions </label>
-                                        <textarea class="materialize-textarea" name="story" id="textarea1" readonly><%= project.story %>
+                                        <textarea class="materialize-textarea" name="story" id="textarea1" readonly><%= project.history[0].story %>
                                             </textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         <label for="formulario">G2G </label>
-                                        <input type="text" name="customer" class="form-control" value="<%= project.g2g %>" readonly>
+                                        <input type="text" name="customer" class="form-control" value="<%= project.history[0].g2g %>" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         <label for="formulario">Offer </label>
-                                        <input type="text" name="customer" class="form-control" value="<%= project.offer %>" readonly>
+                                        <input type="text" name="customer" class="form-control" value="<%= project.history[0].offer %>" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         <label for="formulario">Owner </label>
-                                        <input type="text" name="customer" class="form-control" value="<%= project.owner %>" readonly>
+                                        <input type="text" name="customer" class="form-control" value="<%= project.history[0].owner %>" readonly>
                                     </div>
                                 </div>
 
@@ -681,13 +629,26 @@
 
 
         </div>
+
+        <div class="col s12 m8 offset-m2 l6 offset-l3">
+        <div class="card-panel red z-depth-1">
+          <div class="row valign-wrapper">
+            <div class="col s7">
+              <span class="black-text">
+                <h4> 
+                  This Project is Closed. 
+                </h4>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+                                            
         <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
             <a class="btn-floating btn-large waves-effect waves-light blue darken-4" href="/getprojects">
                 <svg class="icon-carbon" viewBox='0 0 16 14' fill-rule='evenodd'><path d='M3.4 8H16V6H3.3l5-4.7L7 0 0 7l7 7 1.3-1.3z'></path></svg></a>
         </div>
-        <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; left: 24px;">
-            <a class="btn-floating btn-large waves-effect waves-light blue darken-4" href="/editproject?id=<%=project.id %>">Edit </a>
-        </div>
+        
     </main>
 
 </body>

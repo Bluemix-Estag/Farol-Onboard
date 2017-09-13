@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Onboarding Summary</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!--Import materialize.css-->
+    <!-- Compiled and minified CSS -->
+
+
+    <!-- <link href="/style/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection" /> -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+    <link href="/style/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <!-- <link rel="stylesheet" href="/style/form.css" /> -->
+    <!-- <script src="../scripts/userPanel.js"></script> -->
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+    <div class="row">
+        <div class="col s12 m12 l12" style="height:3rem">
+                    <div class="row row-margin" style="height:100%">
+                        <div style="height:100%" class="title-border centralized blue darken-4 col s2 m2 l2"><p>Account</p></div>
+                        <div style="height:100%" class="title-border centralized blue darken-4 col s6 m6 l6"><p>Issue - Last Actions - Status</p></div>
+                        <div style="height:100%" class="title-border centralized blue darken-4 col s1 m1 l1"><p>G2G</p></div>
+                        <div style="height:100%" class="title-border centralized blue darken-4 col s1 m1 l1"><p>Offer</p></div>
+                        <div style="height:100%" class="title-border centralized blue darken-4 col s1 m1 l1"><p>Situation</p></div>
+                        <div style="height:100%" class="title-border centralized blue darken-4 col s1 m1 l1"><p>Owner</p></div>
+                    </div>
+            </div>
+    <% for(var i in projects) {
+      if (i%2 == 0) { %>
+                <div class="col s12 m12 l12" style="">
+                    <div class="row row-margin cells_holder" style="height:100%;" id="" >
+                        <div style="height:100%" class="cell-border centralized blue lighten-3 col s2 m2 l2"><p><%= projects[i].customer%></p></div>
+                        <div style="height:100%" class="cell-border centralized blue lighten-3 col s6 m6 l6"><p><%= projects[i].story%></p></div>
+                        <div style="height:100%" class="cell-border centralized blue lighten-3 col s1 m1 l1"><p><%= projects[i].g2g%></p></div>
+                        <div style="height:100%" class="cell-border centralized blue lighten-3 col s1 m1 l1"><p><%= projects[i].offer%></p></div>
+                        <div style="height:100%" class="cell-border centralized blue lighten-3 col s1 m1 l1"><div class="<%= projects[i].situation %> centralized" style="border-radius:50%;width:45px;height:45px;"></div></div>
+                        <div style="height:100%" class="cell-border centralized blue lighten-3 col s1 m1 l1"><p><%= projects[i].owner%></p></div>
+                    </div>
+                </div>
+
+     <% } else { %>
+                <div class="col s12 m12 l12" style="">
+                    <div class="row row-margin cells_holder" style="height:100%">
+                        <div style="height:100%" class="cell-border centralized blue lighten-4 col s2 m2 l2"><p><%= projects[i].customer%></p></div>
+                        <div style="height:100%" class="cell-border centralized blue lighten-4 col s6 m6 l6"><p><%= projects[i].story%></p></div>
+                        <div style="height:100%" class="cell-border centralized blue lighten-4 col s1 m1 l1"><p><%= projects[i].g2g%></p></div>
+                        <div style="height:100%" class="cell-border centralized blue lighten-4 col s1 m1 l1"><p><%= projects[i].offer%></p></div>
+                        <div style="height:100%" class="cell-border centralized blue lighten-4 col s1 m1 l1"><div class="<%= projects[i].situation %> centralized" style="border-radius:50%;width:45px;height:45px;"></div></div>
+                        <div style="height:100%" class="cell-border centralized blue lighten-4 col s1 m1 l1"><p><%= projects[i].owner%></p></div>
+                    </div>
+                </div>
+    <% }
+    } %>
+
+
+</body>
+  <script type='text/javascript'>
+            var holders = document.getElementsByClassName('cells_holder');
+            for(var holder of holders){
+            var max_height=0;
+            var cells = holder.children;
+                for(var c of cells){
+                    if(c.offsetHeight > max_height){
+                            max_height = c.offsetHeight;
+                    }
+
+                }
+                for(var c of cells){
+                    c.style.height = max_height+'px';
+
+                }
+            }
+  </script>
+
+</html>

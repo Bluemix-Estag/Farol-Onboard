@@ -2,24 +2,27 @@
 <html>
 
 <head>
-    <title>Manage IO</title>
+    <title>Farol Onboard</title>
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-    <link href="style/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link rel="stylesheet" href="/style/materialize.css">
     <link href="style/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
     <link rel="stylesheet" href="/style/form.css" />
+    <link rel="stylesheet" href="/style/tabs.css" />
+
     <!--    Calendario-->
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/style/jquery-ui.css" />
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/jquery-1.8.2.js"></script>
+    <script src="scripts/jquery-ui.js"></script>
     <!--    Fim Calendario-->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xls/0.7.4-a/xls.js"></script>
     <script src="scripts/materialize.js"></script>
+    <script src="scripts/user.js"></script>
+
     <script src="scripts/xls.js"></script>
 
 
@@ -41,6 +44,21 @@
             word-wrap: break-word;
             word-break: break-all;
         }
+        
+        // Class for when element is above threshold
+        .pin-top {
+            position: relative;
+        }
+        
+        // Class for when element is below threshold
+        .pin-bottom {
+            position: relative;
+        }
+        
+        // Class for when element is pinned
+        .pinned {
+            position: fixed !important;
+        }
 
     </style>
 
@@ -59,11 +77,10 @@
                 dateFormat: 'dd/mm/yy',
                 firstDay: 0
             })
-            
-                var selecionado = $('#calendario').val();
-;
-            
-    
+
+            var selecionado = $('#calendario').val();;
+
+
             $("#calendario2").datepicker({
                 dateFormat: 'dd/mm/yy',
                 firstDay: 0,
@@ -71,8 +88,36 @@
             })
         });
 
+        $('.pushpin-demo-nav').each(function() {
+            var $this = $(this);
+            var $target = $('#' + $(this).attr('data-target'));
+            $this.pushpin({
+                top: $target.offset().top,
+                bottom: $target.offset().top + $target.outerHeight() - $this.height()
+            });
+        });
+        $(document).ready(function() {
+            $('.target').pushpin({
+                top: 0,
+                bottom: 100000000000,
+                offset: 0
+            });
+        });
+
     </script>
     <script src="scripts/userPanel.js"></script>
+    <script>
+     $(document).ready(function(){
+                var obj = (getSession('userInfo'));
+                
+                document.getElementById('emailUser').innerHTML = "&nbsp; &nbsp; Email: &nbsp;" + obj.emailaddress ;
+                document.getElementById('nameUser').innerHTML = "&nbsp; Usuario: &nbsp; &nbsp;" + obj.cn;
+//                document.getElementById('ownerEdit').innerHTML = obj.cn;
+                document.getElementById('ownerEdit').value = obj.emailaddress;
+
+            })
+            
+    </script>
 
 
     <!--Let browser know website is optimized for mobile-->
@@ -82,45 +127,43 @@
 <body>
 
     <header>
-        <nav class="indigo" role="navigation">
-            <div class="nav-wrapper">
-                <!--                Alterar href para a pagina hosteada no bluemix, atualmente é para local-->
-                <a style="margin-left: 20px;" class="breadcrumb" href="/onboarduserp">Suas informações: </a>
+        <div class="row">
+            <nav class="pushpin-demo-nav pinned blue darken-4" style="z-index: 999999 !important;" role="navigation">
+                <div class="nav-wrapper">
+                    <!--                Alterar href para a pagina hosteada no bluemix, atualmente é para local-->
+                    <a style="margin-left: 20px;" class="breadcrumb" href="/onboarduserp">Suas informações: </a>
 
-                <div style="margin-right: 20px;" id="timestamp" class="right">
-                    <ul class="right hide-on-med-and-down">
+                    <div style="margin-right: 20px;" id="timestamp" class="right">
+                        <ul class="right hide-on-med-and-down">
+                            <li class="breadcrumb" id="emailUser"> </li>
+                        </ul>
+                        <ul class="right hide-on-med-and-down">
+                            <li class="breadcrumb" id="nameUser"></li>
+                        </ul>
+                    </div>
 
-                        <li class="breadcrumb">&nbsp; &nbsp;Email: cardoso@br.ibm.com &nbsp;</li>
-                    </ul>
-                    <ul class="right hide-on-med-and-down">
-                        <li class="breadcrumb">&nbsp; Usuario: Francisco Cardoso &nbsp; &nbsp;</li>
+                    <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
+                        <li class="tab col s4"><a href="#test-swipe-4" class="active black-text text-darken-2">Status</a></li>
+                        <li class="tab col s4"><a class="black-text text-darken-2" href="#test-swipe-2">Dates</a></li>
+                        <li class="tab col s4"><a href="#test-swipe-3" class="black-text text-darken-2">Names</a></li>
+                        <div class="indicator blue" style="right: 899px; left: 0px;"></div>
                     </ul>
                 </div>
-
-
-            </div>
-        </nav>
+            </nav>
+        
     </header>
 
     <main>
-        <div class="row">
-
             <form action="/confirminsert" method="POST">
                 <section class="main">
                     <div class="container1">
-                        <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
-                            <li class="tab col s4"><a class="black-text text-darken-2" href="#test-swipe-2">Dates</a></li>
-                            <li class="tab col s4"><a href="#test-swipe-3" class="black-text text-darken-2">Names</a></li>
-                            <li class="tab col s4"><a href="#test-swipe-4" class="black-text text-darken-2">Status</a></li>
-
-                        </ul>
                         <div class="row">
 
                             <!--                        Dates Tab            -->
                             <div class="col-xs-8" id="test-swipe-2">
                                 <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
-                                    <li class="tab col s6  light-blue lighten-1" style="border-top: 1px solid black ; "><a href="#test-swipe-7" class=" black-text text-darken-2">CDD</a></li>
-                                    <li class="tab col s6  light-blue lighten-1" style="border-top: 1px solid black ; "><a href="#test-swipe-8" class=" black-text text-darken-2">Date</a></li>
+                                    <li class="tab col s4"><a href="#test-swipe-7" class=" black-text text-darken-2">CDD</a></li>
+                                    <li class="tab col s4"><a href="#test-swipe-8" class=" black-text text-darken-2">Date</a></li>
 
                                 </ul>
                                 <div class="col-xs-8" id="test-swipe-7">
@@ -160,95 +203,95 @@
                                     <!--                                        Seller Row-->
                                     <div class="row">
                                         <div class="input-field inline col s3">
-                                            <input name="name_seller" placeholder="Seller Name" id="name_seller" type="text" class="validate">
+                                            <input name="name" placeholder="Seller Name" id="name_seller" type="text" class="validate" required>
                                             <label for="name_seller">Seller Name</label>
                                         </div>
                                         <div class="input-field inline  col s3">
-                                            <input name="email_seller" id="email" type="text" class="validate">
+                                            <input name="email" id="email" type="text" class="validate" required>
                                             <label for="email_seller">Email</label>
                                         </div>
                                         <div class="input-field inline col s3">
-                                            <input name="idnotes_seller" id="idnotes_seller" type="text" class="validate">
+                                            <input name="idnotes" id="idnotes_seller" type="text" class="validate" required>
                                             <label for="idnotes_seller">ID Notes</label>
                                         </div>
                                         <div class="input-field inline col s3">
-                                            <input name="phone_seller" id="Phone" type="text" class="validate">
+                                            <input name="phone" id="Phone" type="text" class="validate" required>
                                             <label for="phone_seller">Phone</label>
                                         </div>
                                     </div>
                                     <!--                                        TechSeller Row-->
                                     <div class="row">
                                         <div class="input-field inline col s3">
-                                            <input name="name_tseller" placeholder="Tech Seller Name" id="name_seller" type="text" class="validate">
+                                            <input name="name" placeholder="Tech Seller Name" id="name_seller" type="text" class="validate" required>
                                             <label for="name_tseller">Tech Seller Name</label>
                                         </div>
                                         <div class="input-field inline  col s3">
-                                            <input name="email_tseller" id="email" type="text" class="validate">
-                                            <label for="email_tseller">Email</label>
+                                            <input name="email" id="email" type="text" class="validate" required>
+                                            <label for="email">Email</label>
                                         </div>
                                         <div class="input-field inline col s3">
-                                            <input name="idnotes_techseller" id="idnotes_techseller" type="text" class="validate">
+                                            <input name="idnotes" id="idnotes_techseller" type="text" class="validate" required>
                                             <label for="idnotes_techseller">ID Notes</label>
                                         </div>
                                         <div class="input-field inline col s3">
-                                            <input name="phone_tseller" id="Phone" type="text" class="validate">
+                                            <input name="phone" id="Phone" type="text" class="validate" required>
                                             <label for="phone_tseller">Phone</label>
                                         </div>
                                     </div>
                                     <!--                                        Cloud PM Row -->
                                     <div class="row">
                                         <div class="input-field inline col s3">
-                                            <input name="name_cp" placeholder="Cloud PM Name" id="name_seller" type="text" class="validate">
+                                            <input name="name" placeholder="Cloud PM Name" id="name_seller" type="text" class="validate" required>
                                             <label for="name_cp">Cloud PM</label>
                                         </div>
                                         <div class="input-field inline  col s3">
-                                            <input name="email_cp" id="email" type="text" class="validate">
+                                            <input name="email" id="email" type="text" class="validate" required>
                                             <label for="email_cp">Email</label>
                                         </div>
                                         <div class="input-field inline col s3">
-                                            <input name="idnotes_cloudpm" id="idnotes_cloudpm" type="text" class="validate">
+                                            <input name="idnotes" id="idnotes_cloudpm" type="text" class="validate" required>
                                             <label for="idnotes_cloudpm">ID Notes</label>
                                         </div>
                                         <div class="input-field inline col s3">
-                                            <input name="phone_cp" id="Phone" type="text" class="validate">
+                                            <input name="phone" id="Phone" type="text" class="validate" required>
                                             <label for="phone_cp">Phone</label>
                                         </div>
                                     </div>
                                     <!--                                    Local PM row-->
                                     <div class="row">
                                         <div class="input-field inline col s3 ">
-                                            <input name="name_lp" placeholder="Local PM Name" id="name_seller" type="text" class="validate">
+                                            <input name="name" placeholder="Local PM Name" id="name_seller" type="text" class="validate" required>
                                             <label for="name_lp">Local PM</label>
                                         </div>
                                         <div class="input-field inline  col s3">
-                                            <input name="email_lp" id="email" type="text" class="validate">
+                                            <input name="email" id="email" type="text" class="validate" required>
                                             <label for="email_lp">Email</label>
                                         </div>
                                         <div class="input-field inline col s3">
-                                            <input name="idnotes_localpm" id="idnotes_localpm" type="text" class="validate">
+                                            <input name="idnotes" id="idnotes_localpm" type="text" class="validate" required>
                                             <label for="idnotes_localpm">ID Notes</label>
                                         </div>
                                         <div class="input-field inline col s3">
-                                            <input name="phone_lp" id="Phone" type="text" class="validate">
+                                            <input name="phone" id="Phone" type="text" class="validate" required>
                                             <label for="phone_lp">Phone</label>
                                         </div>
                                     </div>
                                     <!--                                        Cloud DPE-->
                                     <div class="row">
                                         <div class="input-field inline col s3">
-                                            <input name="name_dpe" placeholder="Local DPE Name" id="localdpe_name" type="text" class="validate">
+                                            <input name="name" placeholder="Local DPE Name" id="localdpe_name" type="text" class="validate" required>
                                             <label for="name_dpe">Local DPE</label>
                                         </div>
                                         <div class="input-field inline  col s3">
-                                            <input name="email_dpe" id="email" type="text" class="validate">
+                                            <input name="email" id="email" type="text" class="validate" required>
                                             <label for="email_dpe">Email</label>
                                         </div>
                                         <div class="input-field inline col s3">
-                                            <input name="idnotes_dpe" id="idnotes_dpe" type="text" class="validate">
+                                            <input name="idnotes" id="idnotes_dpe" type="text" class="validate" required>
                                             <label for="idnotes_dpe">ID Notes</label>
                                         </div>
                                         <div class="input-field inline col s3">
-                                            <input name="phone_dpe" id="Phone" type="text" class="validate">
+                                            <input name="phone" id="Phone" type="text" class="validate" required>
                                             <label for="phone_dpe">Phone</label>
                                         </div>
                                     </div>
@@ -256,19 +299,19 @@
                                     <div class="row">
 
                                         <div class="input-field inline col s3">
-                                            <input placeholder="Customer" name="name_customer" id="name_customer" type="text" class="validate">
+                                            <input placeholder="Customer" name="name" id="name_customer" type="text" class="validate" required>
                                             <label for="name_customer">Customer</label>
                                         </div>
                                         <div class="input-field inline  col s3">
-                                            <input name="email_customer" id="email" type="text" class="validate">
+                                            <input name="email" id="email" type="text" class="validate" required>
                                             <label for="email_customer">Email</label>
                                         </div>
                                         <div class="input-field inline col s3">
-                                            <input name="idnotes_customer" id="idnotes_customer" type="text" class="validate">
+                                            <input name="idnotes" id="idnotes_customer" type="text" class="validate" required>
                                             <label for="idnotes_customer">ID Notes</label>
                                         </div>
                                         <div class="input-field inline col s3">
-                                            <input name="phone_customer" id="phone_customer" type="text" class="validate">
+                                            <input name="phone" id="phone_customer" type="text" class="validate" required>
                                             <label for="phone_customer">Phone</label>
                                         </div>
                                     </div>
@@ -279,60 +322,108 @@
                                 <fieldset>
                                     <!--                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;"> Edite seu projeto</span>-->
                                     <div class="form-group">
-                                        <div class="form-group ">
+                                        <div class="col-md-4">
+
                                             <label>Market Select</label>
-                                            <select name="market" class="browser-default">
-                                        <option value="" disabled selected>Choose project market</option>
+                                            <select name="market" class="browser-default" required>
+                                            <option value="" disabled selected>Choose project market</option>
                                             <option value="brazil">Brazil</option>
                                             <option value="ssa">SSA</option>
                                             <option value="mexico">Mexico</option>
-                                        </select>
+                                            </select>
                                         </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label>Offer</label>
+                                            <select name="offer" class="browser-default" required>
+                                                            <option value="" disabled selected>Choose Project Offer</option>
+                                                            <option value="C4SAP">C4SAP</option>
+                                                            <option value="C4ORACLE">C4ORACLE</option>
+                                                            <option value="Bluemix">Bluemix</option>
+                                                   </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div class="col-md-4">
+                                            <label for="formulario">Unique ID </label>
+                                            <input type="text" name="id" class="form-control" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label for="formulario">Project Situation </label>
+
+                                            <select name="situation" class="browser-default">
+                                                    <option value="" disabled selected>Choose Project Situation</option>
+                                                    <option value="red">Red</option>
+                                                    <option value="yellow">Yellow</option>
+                                                    <option value="green">Green</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
                                         <div class="col-md-4">
                                             <label for="formulario">Customer </label>
                                             <input type="text" name="customer" class="form-control" required>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="col-md-4">
-                                                <label for="formulario">Last Actions </label>
-                                                <textarea class="materialize-textarea" name="story" id="textarea1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label for="formulario">Last Actions </label>
+                                            <textarea class="materialize-textarea" name="story" id="textarea1" required>
                                             </textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-4">
-                                                <label for="formulario">G2G </label>
-                                                <input type="text" name="g2g" class="form-control" value="" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-4">
-                                                <label for="formulario">Offer </label>
-                                                <input type="text" name="offer" class="form-control" value="" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-4">
-                                                <label for="formulario">Owner </label>
-                                                <input type="text" name="owner" class="form-control" required/>
-                                            </div>
                                         </div>
                                     </div>
-                                </fieldset>
-                            </div>
-                        </div>
-                        <input type="submit" value="Submit" class="waves-effect waves-light btn indigo">
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label for="formulario">G2G </label>
+                                            <input type="text" name="g2g" class="form-control" value="" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label for="formulario">MRR </label>
+                                            <input type="text" name="mrr" class="form-control" required/>    
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label for="formulario">TCV </label>
+                                            <input type="text" name="tcv" class="form-control" required/>    
+                                        </div>
+                                    </div>
 
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label for="formulario">Owner </label>
+                                            <input type="text" name="owner" class="form-control" id="ownerEdit" value="" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                        <input type="hidden" name="isClosed" value="false" />
+                                        </div>
+                                    </div>
+                            </div>
+                            </fieldset>
+                        </div>
                     </div>
-                </section>
-            </form>
+                    <input type="submit" value="Submit" class="waves-effect waves-light btn blue darken-4">
+<!--                    <button value="Delete Project" class="waves-effect waves-light btn blue darken-4" onclick="return confirm('Are you sure you want to insert this project?');" style="cursor:pointer;">Submit Project</button>-->
+
+        </div>
+        </section>
+        </form>
 
 
 
 
         </div>
         <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
-            <a class="btn-floating btn-large waves-effect waves-light indigo" href="/onboarduserp"><i class="material-icons">fast_rewind</i></a>
+            <a class="btn-floating btn-large waves-effect waves-light blue darken-4" href="/getprojects">
+                <svg class="icon-carbon" viewBox='0 0 16 14' fill-rule='evenodd'><path d='M3.4 8H16V6H3.3l5-4.7L7 0 0 7l7 7 1.3-1.3z'></path></svg></a>
         </div>
     </main>
 

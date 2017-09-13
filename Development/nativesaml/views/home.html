@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+    <title>Code Bakery</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="style/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="style/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <script src="scripts/user.js"></script>
+
+
+</head>
+
+<body onload="setSession('userInfo', JSON.parse(document.getElementById('user').value)); submitform()">
+
+    <input type="hidden" id="user" value="<%= JSON.stringify(user) %>" />
+
+    <script>
+        var obj = (getSession('userInfo'));
+
+        function submitform() {
+            document.forms["form"].submit();
+        }
+
+    </script>
+
+    <form action="/getprojects" method="get" id="form">
+    </form>
+    <div class="center">
+
+        <div class="preloader-wrapper big active" style="margin-top: 25%; margin-bottom: 25%; ">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+
+.tabs .indicator {
+    color: blue;
+}
+
+
+.container1{
+    margin-top: 8%;
+}
+
+
+<iframe scrolling='no' frameborder='0' allowTransparency='true' src='https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=350&color=007FEB&layout=dark&size=medium&type=tracks&id=3135556' width='700' height='350'></iframe>
+<iframe scrolling="no" frameborder="0" allowTransparency="true" src="https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=350&color=007FEB&layout=dark&size=medium&type=radio&id=artist-27" width="700" height="350"></iframe>
+
+<iframe scrolling="no" frameborder="0" allowTransparency="true" src="https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=350&color=007FEB&layout=dark&size=medium&type=album&id=119606" width="700" height="350"></iframe>

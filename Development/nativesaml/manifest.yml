@@ -3,8 +3,6 @@ applications:
   memory: 256M
   instances: 1
   domain: mybluemix.net
-  name: projecit
-  host: projecit
+  name: Farol-Onboard
+  host: farolonboard
   disk_quota: 1024M
-  services:
-  - code-bakery-orchestrator-cloudantNoSQLDB
