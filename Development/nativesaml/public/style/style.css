@@ -110,3 +110,11 @@ span.yellow {
     height: 20px;
     fill: white;
 }
+
+.custom_title{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+/*    width: 20px !important;*/
+}
+

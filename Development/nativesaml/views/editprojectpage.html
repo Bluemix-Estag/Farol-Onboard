@@ -1,544 +1,318 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <title>Farol Onboard</title>
-      <!--    Carbon Components-->
-      <!--    <link href="https://unpkg.com/carbon-components/css/carbon-components.min.css" rel="stylesheet" />-->
-      <!--Import Google Icon Font-->
-      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-      <!-- Compiled and minified CSS -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-      <link href="style/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
-      <link href="style/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
-      <link rel="stylesheet" href="/style/form.css" />
-      <link rel="stylesheet" href="/style/tabs.css" />
-      <!--    Calendario-->
-      <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
-      <script src="scripts/jquery.min.js"></script>
-      <script src="scripts/jquery-1.8.2.js"></script>
-      <script src="scripts/jquery-ui.js"></script>
-      <!--    Fim Calendario-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/xls/0.7.4-a/xls.js"></script>
-      <script src="scripts/materialize.js"></script>
-      <script src="scripts/user.js"></script>
-      <!--    <script src="scripts/xls.js"></script>-->
-      <style>
-         td {
-         /* CSS3 */
-         white-space: pre-wrap;
-         /* Firefox */
-         white-space: -moz-pre-wrap;
-         /* Opera <7 */
-         white-space: -pre-wrap;
-         /* Opera 7 */
-         white-space: -o-pre-wrap;
-         /* IE */
-         word-wrap: break-word;
-         word-break: break-all;
-         }
-         // Class for when element is above threshold
-         .pin-top {
-         position: relative;
-         }
-         // Class for when element is below threshold
-         .pin-bottom {
-         position: relative;
-         }
-         // Class for when element is pinned
-         .pinned {
-         position: fixed !important;
-         }
-      </style>
-      <script>
-         $(document).ready(function() {
-             $('ul.tabs').tabs();
-         });
-         
-         $(document).ready(function() {
-             $('select').material_select();
-         });
-         
-         $(function() {
-             $("#calendario").datepicker({
-                 dateFormat: 'dd/mm/yy',
-                 firstDay: 0
-             })
-         
-             var selecionado = $('#calendario').val();;
-         
-         
-             $("#calendario2").datepicker({
-                 dateFormat: 'dd/mm/yy',
-                 firstDay: 0,
-                 minDate: 0
-             })
-         });
-         
-         $('.pushpin-demo-nav').each(function() {
-             var $this = $(this);
-             var $target = $('#' + $(this).attr('data-target'));
-             $this.pushpin({
-                 top: $target.offset().top,
-                 bottom: $target.offset().top + $target.outerHeight() - $this.height()
-             });
-         });
-         $(document).ready(function() {
-             $('.target').pushpin({
-                 top: 0,
-                 bottom: 100000000000,
-                 offset: 0
-             });
-         });
-         
-      </script>
-      <script src="scripts/userPanel.js"></script>
-      <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   </head>
-   <body>
-      <header>
-         <script>
-            $(document).ready(function() {
-                var obj = (getSession('userInfo'));
-            
-                document.getElementById('emailUser').innerHTML = "&nbsp; &nbsp; Email: &nbsp;" + obj.emailaddress;
-                document.getElementById('nameUser').innerHTML = "&nbsp; Usuario: &nbsp; &nbsp;" + obj.cn;
-                document.getElementById('ownerEdit').value = obj.emailaddress;
-            
-            
+
+<head>
+    <title>Farol Onboard</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="/style/materialize.css">
+    <link href="style/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link rel="stylesheet" href="/style/form.css" />
+    <link rel="stylesheet" href="/style/tabs.css" />
+
+    <!--    Calendario-->
+    <link rel="stylesheet" href="/style/jquery-ui.css" />
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/jquery-1.8.2.js"></script>
+    <script src="scripts/jquery-ui.js"></script>
+    <script src="scripts/util.js"></script>
+    <script src="scripts/insert.js"></script>
+
+
+    <!--    Fim Calendario-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xls/0.7.4-a/xls.js"></script>
+    <script src="scripts/materialize.js"></script>
+    <script src="scripts/user.js"></script>
+    
+<!--    Descomentar abaixo !!!!!!!!!!!!!!-->
+    <script src="scripts/loginNav.js"></script>
+    <script src="scripts/validate.js"></script>
+    <script src="scripts/xls.js"></script>
+
+    <script src="scripts/edit.js"></script>
+
+
+    <style>
+        td {
+            /* CSS3 */
+            white-space: pre-wrap;
+            /* Firefox */
+            white-space: -moz-pre-wrap;
+            /* Opera <7 */
+            white-space: -pre-wrap;
+            /* Opera 7 */
+            white-space: -o-pre-wrap;
+            /* IE */
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+        
+        // Class for when element is above threshold
+        .pin-top {
+            position: relative;
+        }
+        
+        // Class for when element is below threshold
+        .pin-bottom {
+            position: relative;
+        }
+        
+        // Class for when element is pinned
+        .pinned {
+            position: fixed !important;
+        }
+
+    </style>
+
+
+    <script>
+        $(document).ready(function() {
+            $('ul.tabs').tabs();
+            $('select').material_select();
+            $('.target').pushpin({
+                top: 0,
+                bottom: 100000000000,
+                offset: 0
+            });
+
+        });
+
+        $(function() {
+            $("#calendario").datepicker({
+                dateFormat: 'dd/mm/yy',
+                firstDay: 0
             })
-            
-         </script>
-         <nav class="pushpin-demo-nav pinned blue darken-4" role="navigation" style="z-index: 999999 !important;">
-            <div class="nav-wrapper">
-               <!--                Alterar href para a pagina hosteada no bluemix, atualmente é para local-->
-               <a style="margin-left: 20px;" class="breadcrumb" href="/onboarduserp">Suas informações: </a>
-               <div style="margin-right: 20px;" id="timestamp" class="right">
-                  <ul class="right hide-on-med-and-down">
-                     <li class="breadcrumb" id="emailUser"> </li>
-                  </ul>
-                  <ul class="right hide-on-med-and-down">
-                     <li class="breadcrumb" id="nameUser"></li>
-                  </ul>
-               </div>
-               <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
-                  <li class="tab col s4"><a href="#test-swipe-4" class="active black-text text-darken-2">Status</a></li>
-                  <li class="tab col s4"><a class="black-text text-darken-2" href="#test-swipe-2">Dates</a></li>
-                  <li class="tab col s4"><a href="#test-swipe-3" class="black-text text-darken-2">Names</a></li>
-               </ul>
-            </div>
-         </nav>
-      </header>
-      <main>
-         <div class="row">
-            <form action="/confirmupdate" method="POST">
-               <section class="main">
-                  <div class="container1">
-                     <div class="row">
+
+            var selecionado = $('#calendario').val();;
+
+
+            $("#calendario2").datepicker({
+                dateFormat: 'dd/mm/yy',
+                firstDay: 0,
+                minDate: 0
+            })
+        });
+
+        $('.pushpin-demo-nav').each(function() {
+            var $this = $(this);
+            var $target = $('#' + $(this).attr('data-target'));
+            $this.pushpin({
+                top: $target.offset().top,
+                bottom: $target.offset().top + $target.outerHeight() - $this.height()
+            });
+        });
+
+    </script>
+
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body onload="refreshSelect();">
+
+    <header>
+        <div class="row">
+            <nav class="pushpin-demo-nav pinned blue darken-4" style="z-index: 999999 !important;" role="navigation">
+                <div class="nav-wrapper">
+                    <!--                Alterar href para a pagina hosteada no bluemix, atualmente é para local-->
+                    <a style="margin-left: 20px;" class="breadcrumb" href="/onboarduserp"></a>
+
+                    <div style="margin-right: 20px;" id="timestamp" class="right">
+                        <ul class="right hide-on-med-and-down">
+                            <li class="breadcrumb" id="emailUser"> </li>
+                        </ul>
+                        <ul class="right hide-on-med-and-down">
+                            <li class="breadcrumb" id="nameUser"></li>
+                        </ul>
+                    </div>
+
+                    <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
+                        <li class="tab col s4"><a href="#test-swipe-4" class="active black-text text-darken-2">Status</a></li>
+                        <li class="tab col s4"><a class="black-text text-darken-2" href="#test-swipe-2">Dates</a></li>
+                        <li class="tab col s4"><a href="#test-swipe-3" class="black-text text-darken-2">Names</a></li>
+                        <div class="indicator blue" style="right: 899px; left: 0px;"></div>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <form action="/confirmupdate" method="POST">
+            <section class="main">
+                <div class="container1">
+                    <div class="row">
+
                         <!--                        Dates Tab            -->
                         <div class="col-xs-8" id="test-swipe-2">
-                           <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
-                              <li class="tab col s4" style="border-top: 1px solid black ; "><a href="#test-swipe-7" class=" black-text text-darken-2">CDD</a></li>
-                              <li class="tab col s4" style="border-top: 1px solid black ; "><a href="#test-swipe-8" class=" black-text text-darken-2">Date</a></li>
-                           </ul>
-                           <% for (var cdd0 in project.cdd0){ %>
-                           <input type="hidden" name="cdd0" value="<%= project.cdd0[cdd0] %>">
-                           <% } %>
-                           <% for (var cdd1 in project.cdd1){ %>
-                           <input type="hidden" name="cdd1" value="<%= project.cdd1[cdd1] %>">
-                           <% } %>
-                           <% for (var cdd2 in project.cdd2){ %>
-                           <input type="hidden" name="cdd2" value="<%= project.cdd2[cdd2] %>">
-                           <% } %>
-                           <% for (var cdd3 in project.cdd3){ %>
-                           <input type="hidden" name="cdd3" value="<%= project.cdd3[cdd3] %>">
-                           <% } %>
-                           <% for (var cdd4 in project.cdd4){ %>
-                           <input type="hidden" name="cdd4" value="<%= project.cdd4[cdd4] %>">
-                           <% } %>
-                           <% for (var cdd5 in project.cdd5){ %>
-                           <input type="hidden" name="cdd5" value="<%= project.cdd5[cdd5] %>">
-                           <% } %>
-                           <% for (var cdd6 in project.cdd6){ %>
-                           <input type="hidden" name="cdd6" value="<%= project.cdd6[cdd6] %>">
-                           <% } %>
-                           <% for (var cdd7 in project.cdd7){ %>
-                           <input type="hidden" name="cdd7" value="<%= project.cdd7[cdd7] %>">
-                           <% } %>
-                           <% for (var cdd8 in project.cdd8){ %>
-                           <input type="hidden" name="cdd8" value="<%= project.cdd8[cdd8] %>">
-                           <% } %>
-                           <% for (var cdd9 in project.cdd9){ %>
-                           <input type="hidden" name="cdd9" value="<%= project.cdd9[cdd9] %>">
-                           <% } %>
-                           <% for (var cdd10 in project.cdd10){ %>
-                           <input type="hidden" name="cdd10" value="<%= project.cdd10[cdd10] %>">
-                           <% } %>
-                           <% for (var cdd11 in project.cdd11){ %>
-                           <input type="hidden" name="cdd11" value="<%= project.cdd11[cdd11] %>">
-                           <% } %>
-                           <% for (var cdd12 in project.cdd12){ %>
-                           <input type="hidden" name="cdd12" value="<%= project.cdd12[cdd12] %>">
-                           <% } %>
-                           <% for (var cdd13 in project.cdd13){ %>
-                           <input type="hidden" name="cdd13" value="<%= project.cdd13[cdd13] %>">
-                           <% } %>
-                           <div class="col-xs-8" id="test-swipe-7">
-                              <table class="responsive-table striped">
-                                 <thead>
-                                    <tr class=" blue lighten-2" id="tablegr">
-                                       <% for (var cdd0 in project.cdd0) { %>
-                                       <th id="tablegr">
-                                          <%= project.cdd0[cdd0]%>
-                                       </th>
-                                       <% } %>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    <tr>
-                                       <% for (var key in project.cdd1) { %>
-                                       <% if (key == 0 ) { %>
-                                       <td class=" blue lighten-2" id="tablegr"><%= project.cdd1[key] %>
-                                       </td>
-                                       <% } else {%>
-                                       <td id="tablegr">
-                                          <%= project.cdd1[key] %>
-                                       </td>
-                                       <% } %>
-                                       <% } %>
-                                    </tr>
-                                    <tr>
-                                       <% for (var key in project.cdd2) { %>
-                                       <% if (key == 0 ) { %>
-                                       <td class=" blue lighten-2" id="tablegr"><%= project.cdd2[key] %>
-                                       </td>
-                                       <% } else {%>
-                                       <td id="tablegr"><%= project.cdd2[key] %>
-                                       </td>
-                                       <% } %>
-                                       <% } %>
-                                    </tr>
-                                    <tr>
-                                       <% for (var key in project.cdd3) { %><% if (key == 0 ) { %>
-                                       <td class=" blue lighten-2" id="tablegr"><%= project.cdd3[key] %>
-                                       </td>
-                                       <% } else {%>
-                                       <td id="tablegr"><%= project.cdd3[key] %>
-                                       </td>
-                                       <% } %>
-                                       <% } %>
-                                    </tr>
-                                    <tr>
-                                       <% for (var key in project.cdd4) { %>
-                                       <% if (key == 0 ) { %>
-                                       <td class=" blue lighten-2" id="tablegr"><%= project.cdd4[key] %>
-                                       </td>
-                                       <% } else {%>
-                                       <td id="tablegr"><%= project.cdd4[key] %>
-                                       </td>
-                                       <% } %>
-                                       <% } %>
-                                    </tr>
-                                    <tr>
-                                       <% for (var key in project.cdd5) { %>
-                                       <% if (key == 0 ) { %>
-                                       <td class=" blue lighten-2" id="tablegr"><%= project.cdd5[key] %>
-                                       </td>
-                                       <% } else {%>
-                                       <td id="tablegr"><%= project.cdd5[key] %>
-                                       </td>
-                                       <% } %>
-                                       <% } %>
-                                    </tr>
-                                    <tr>
-                                       <% for (var key in project.cdd6) { %>
-                                       <% if (key == 0 ) { %>
-                                       <td class=" blue lighten-2" id="tablegr"><%= project.cdd6[key] %>
-                                       </td>
-                                       <% } else {%>
-                                       <td id="tablegr"><%= project.cdd6[key] %>
-                                       </td>
-                                       <% } %>
-                                       <% } %>
-                                    </tr>
-                                    <tr>
-                                       <% for (var key in project.cdd7) { %>
-                                       <% if (key == 0 ) { %>
-                                       <td class=" blue lighten-2" id="tablegr"><%= project.cdd7[key] %>
-                                       </td>
-                                       <% } else {%>
-                                       <td id="tablegr"><%= project.cdd7[key] %>
-                                       </td>
-                                       <% } %>
-                                       <% } %>
-                                    </tr>
-                                    <tr>
-                                       <% for (var key in project.cdd8) { %>
-                                       <% if (key == 0 ) { %>
-                                       <td class=" blue lighten-2" id="tablegr"><%= project.cdd8[key] %>
-                                       </td>
-                                       <% } else {%>
-                                       <td id="tablegr"><%= project.cdd8[key] %>
-                                       </td>
-                                       <% } %>
-                                       <% } %>
-                                    </tr>
-                                    <tr>
-                                       <% for (var key in project.cdd9) { %>
-                                       <% if (key == 0 ) { %>
-                                       <td class=" blue lighten-2" id="tablegr"><%= project.cdd9[key] %>
-                                       </td>
-                                       <% } else {%>
-                                       <td id="tablegr"><%= project.cdd9[key] %>
-                                       </td>
-                                       <% } %>
-                                       <% } %>
-                                    </tr>
-                                    <tr>
-                                       <% for (var key in project.cdd10) { %>
-                                       <% if (key == 0 ) { %>
-                                       <td class=" green lighten-2" id="tablegr"><%= project.cdd10[key] %>
-                                       </td>
-                                       <% } else {%>
-                                       <td id="tablegr"><%= project.cdd10[key] %>
-                                       </td>
-                                       <% } %>
-                                       <% } %>
-                                    </tr>
-                                    <tr>
-                                       <% for (var key in project.cdd11) { %>
-                                       <% if (key == 0 ) { %>
-                                       <td class="red darken-4" id="tablegr"><%= project.cdd11[key] %>
-                                       </td>
-                                       <% } else {%>
-                                       <td id="tablegr" class="yellow"><%= project.cdd11[key] %>
-                                       </td>
-                                       <% } %>
-                                       <% } %>
-                                    </tr>
-                                    <tr>
-                                       <% for (var key in project.cdd12) { %>
-                                       <% if (key == 0 ) { %>
-                                       <td class=" red darken-4" id="tablegr"><%= project.cdd12[key] %>
-                                       </td>
-                                       <% } else {%>
-                                       <td id="tablegr" class="yellow"><%= project.cdd12[key] %>
-                                       </td>
-                                       <% } %>
-                                       <% } %>
-                                    </tr>
-                                    <tr>
-                                       <% for (var key in project.cdd13) { %>
-                                       <% if (key == 0 ) { %>
-                                       <td class="red darken-4" id="tablegr"><%= project.cdd13[key] %>
-                                       </td>
-                                       <% } else {%>
-                                       <td id="tablegr" class="yellow"><%= project.cdd13[key] %>
-                                       </td>
-                                       <% } %>
-                                       <% } %>
-                                    </tr>
-                                 </tbody>
-                              </table>
-                           </div>
-                           <div class="col-xs-8" id="test-swipe-8">
-                              <div class="form-group">
-                                 <div class="col-md-4">
-                                    <p>Data: <input name="DATE" type="text" id="calendario" value="<%= project.DATE %> " /></p>
-                                 </div>
-                              </div>
-                              <!--                                        Calendar-->
-                              <div class="form-group">
-                                 <div class="col-md-4">
-                                    <p>ETA: <input name="eta" type="text" id="calendario2" value="<%= project.eta %>" /></p>
-                                 </div>
-                              </div>
-                           </div>
+                            <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
+                                <li class="tab col s4"><a href="#test-swipe-7" class=" black-text text-darken-2">CDD</a></li>
+                                <li class="tab col s4"><a href="#test-swipe-8" class=" black-text text-darken-2">Date</a></li>
+
+                            </ul>
+                            <div class="col-xs-8" id="test-swipe-7">
+
+                                <form action="getxls" method="post">
+                                    <input type="file" id="my_file_input" />
+                                    <table class="responsive-table bordered ">
+                                        <tbody id="table_input_body">
+
+                                        </tbody>
+                                        <tbody id='my_file_output'>
+                                        </tbody>
+                                    </table>
+                                </form>
+
+                            </div>
+                            <div class="col-xs-8" id="test-swipe-8">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <p>Data: <input name="DATE" type="text" id="date" /></p>
+
+                                    </div>
+                                </div>
+
+                                <!--                                        Calendar-->
+                                <div class="form-group">
+                                    <div class="col-md-4">
+
+                                        <p>ETA: <input name="eta" type="text" id="eta" /></p>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                         <!--                                    Names Tab-->
-                        <div class="col-xs-6" id="test-swipe-3">
-                           <fieldset>
-                              <!--                                        Seller Row-->
-                              <div class="row">
-                                 <div class="input-field inline col s3">
-                                    <p> Name</p>
-                                 </div>
-                                 <div class="input-field inline  col s3">
-                                    <p>Email</p>
-                                 </div>
-                                 <div class="input-field inline col s3">
-                                    <p>ID Notes</p>
-                                 </div>
-                                 <div class="input-field inline col s3">
-                                    <p>Phone</p>
-                                 </div>
-                              </div>
-                              <div class="row">
-                                 <div class="input-field inline col s3">
-                                    <input name="name" placeholder="Seller Name" id="name_seller" value="<%= project.names.seller.name %> " type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline  col s3">
-                                    <input name="email" id="email" type="text" class="validate" value="<%= project.names.seller.email %>" required>
-                                 </div>
-                                 <div class="input-field inline col s3">
-                                    <input name="idnotes" id="idnotes_seller" type="text" class="validate" value="<%= project.names.seller.idnotes %> " required>
-                                 </div>
-                                 <div class="input-field inline col s3">
-                                    <input name="phone" id="Phone" type="text" value="<%= project.names.seller.phone %> " class="validate" required>
-                                 </div>
-                              </div>
-                              <!--                                        TechSeller Row-->
-                              <div class="row">
-                                 <div class="input-field inline col s3">
-                                    <input name="name" placeholder="Tech Seller Name" value="<%= project.names.techseller.name %> " id="name_seller" type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline  col s3">
-                                    <input name="email" id="email" value="<%= project.names.techseller.email %> " type="text" class="validate" placeholder="Tech Seller Email" required>
-                                 </div>
-                                 <div class="input-field inline col s3">
-                                    <input name="idnotes" id="idnotes_techseller" value="<%= project.names.techseller.idnotes %> " placeholder="Tech Seller Notes ID" type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline col s3">
-                                    <input name="phone" value="<%= project.names.techseller.phone %> " placeholder="Tech Seller Phone Number" id="Phone" type="text" class="validate" required>
-                                 </div>
-                              </div>
-                              <!--                                        Cloud PM Row -->
-                              <div class="row">
-                                 <div class="input-field inline col s3">
-                                    <input name="name" value="<%= project.names.cloudpm.name %> " placeholder="Cloud PM Name" id="name_seller" type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline  col s3">
-                                    <input name="email" value="<%= project.names.cloudpm.email %> " placeholder="Cloud PM Email" id="email" type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline col s3">
-                                    <input name="idnotes" value="<%= project.names.cloudpm.idnotes %> " placeholder="Cloud PM ID Notes" id="idnotes_cloudpm" type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline col s3">
-                                    <input name="phone" value="<%= project.names.cloudpm.phone %> " placeholder="Cloud PM Phone" id="Phone" type="text" class="validate" required>
-                                 </div>
-                              </div>
-                              <!--                                    Local PM row-->
-                              <div class="row">
-                                 <div class="input-field inline col s3 ">
-                                    <input name="name" value="<%= project.names.localpm.name %> " placeholder="Local PM Name" id="name_seller" type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline  col s3">
-                                    <input name="email" value="<%= project.names.localpm.email %> " placeholder="Local PM Email" id="email" type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline col s3">
-                                    <input name="idnotes" value="<%= project.names.localpm.idnotes %> " placeholder="Local PM ID Notes" id="idnotes_localpm" type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline col s3">
-                                    <input name="phone" value="<%= project.names.localpm.phone %> " placeholder="Local PM Phone" id="Phone" type="text" class="validate" required>
-                                 </div>
-                              </div>
-                              <!--                                        Cloud DPE-->
-                              <div class="row">
-                                 <div class="input-field inline col s3">
-                                    <input name="name" value="<%= project.names.cloudpe.name %> " placeholder="Cloud DPE Name" id="localdpe_name" type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline  col s3">
-                                    <input name="email" value="<%= project.names.cloudpe.email %> " placeholder="Cloud DPE Email" id="email" type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline col s3">
-                                    <input name="idnotes" id="idnotes_dpe" value="<%= project.names.cloudpe.idnotes %> " placeholder="Cloud DPE ID Notes" type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline col s3">
-                                    <input name="phone" id="Phone" value="<%= project.names.cloudpe.phone %> " placeholder="Cloud DPE Phone" type="text" class="validate" required>
-                                 </div>
-                              </div>
-                              <!--                                        Customer -->
-                              <div class="row">
-                                 <div class="input-field inline col s3">
-                                    <input placeholder="Customer" name="name" value="<%= project.names.customer.name %> " placeholder="Customer Name" id="name_customer" type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline  col s3">
-                                    <input name="email" value="<%= project.names.customer.email %> " placeholder="Customer Email" id="email" type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline col s3">
-                                    <input name="idnotes" value="<%= project.names.customer.idnotes %> " placeholder="Customer ID Notes" id="idnotes_customer" type="text" class="validate" required>
-                                 </div>
-                                 <div class="input-field inline col s3">
-                                    <input name="phone" id="phone_customer" value="<%= project.names.customer.phone %> " placeholder="Customer Phone" type="text" class="validate" required>
-                                 </div>
-                              </div>
-                           </fieldset>
+                        <div class="col-xs-6" id="test-swipe-3" onclick="refreshSelect()">
+                            <fieldset>
+                                <h6>Leave the default value if the person does not have it</h6>
+                                <div id="names-tab">
+                                    <div class="row">
+                                        <div class="row">
+                                            <div class="col s12" id="names_input">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class="waves-effect waves-light btn blue darken-4" onclick="createName();">Add Name</a>
+                                </div>
+                            </fieldset>
                         </div>
+
+
+
                         <!--                                        Status Tab-->
                         <div class="col-xs-6" id="test-swipe-4">
-                           <fieldset>
-                              <!--                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;"> Edite seu projeto</span>-->
-                              <div class="form-group">
-                                 <div class="form-group ">
-                                    <div class="col-md-4">
-                                       <label for="formulario">Unique ID </label>
-                                       <input type="text" name="id" class="form-control" value="<%= project._id %>" readonly required>
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <div class="col-md-4">
-                                       <input type="hidden" name="market" value="<%= project.market %>">
-                                       <label for="formulario">Project Situation at this moment: <span class="<%= project.situation %>">&nbsp;</span></label>
-                                       <select name="situation" class="browser-default" required>
-                                          <option value="" disabled selected>Choose Project Situation</option>
-                                          <option value="red">Red</option>
-                                          <option value="yellow">Yellow</option>
-                                          <option value="green">Green</option>
-                                       </select>
-                                    </div>
-                                 </div>
-                                 <div class="form-group ">
-                                    <div class="col-md-4">
-                                       <label for="formulario">Customer </label>
-                                       <input type="text" name="customer" class="form-control" value="<%= project.customer %>" required>
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <div class="col-md-4">
-                                       <label for="formulario">Last Actions </label>
-                                       <textarea class="materialize-textarea" name="story" id="textarea1" required>
-                                       <%= project.story %>     
-                                       </textarea>
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <div class="col-md-4">
-                                       <label for="formulario">G2G </label>
-                                       <input type="text" name="g2g" class="form-control" value="<%= project.g2g %>" required>
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <div class="col-md-4">
-                                       <label for="formulario" class="bx--label bx--label--disabled">Offer </label>
-                                       <input type="text" name="offer" class="form-control bx--text-input" value="<%= project.offer %>" readonly>
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <div class="col-md-4">
-                                       <label for="formulario">Owner </label>
-                                       <input type="text" name="owner" id="ownerEdit" class="form-control" value=" " readonly />
-                                    </div>
-                                     
-                                 </div>
+                            <fieldset>
+
                                 <div class="form-group">
-                                        <div class="col-md-4">
-                                        <input type="hidden" name="isClosed" value="false" />
-                                        </div>
+                                    <div class="col-md-4">
+                                        <input id="imt" name="market" type="hidden" class="validate black-text">
+
+
+                                    </div>
                                 </div>
-                              </div>
-                           </fieldset>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+
+                                        <input id="offer" name="offer" type="hidden" class="validate black-text">
+
+
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-md-4">
+                                        <!--                                            <input id="unique-id" type="tel" name="id" class="validate black-text" disabled>-->
+                                        <input id="unique-id" type="hidden" name="id" class="validate black-text">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label for="formulario">Stage </label>
+                                        <select name="project_state" class="browser-default" required>
+                                                            <option value="" selected>Choose Project Stage</option>
+                                                            <option value="engagement">Engagement</option>
+                                                            <option value="onboard">Onboarding</option>
+                                                            <option value="steady">Steady State</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label for="formulario">Project Situation </label>
+
+                                        <select name="situation" class="browser-default" required>
+                                                    <option value="" selected>Choose Project Situation</option>
+                                                    <option value="red">Red</option>
+                                                    <option value="yellow">Yellow</option>
+                                                    <option value="green">Green</option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-md-4">
+                                        <input id="customer" type="hidden" name="customer" class="validate black-text">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label for="formulario">Last Actions </label>
+                                        <textarea class="materialize-textarea" name="story" id="last_actions_status" >
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label for="formulario">G2G </label>
+                                        <input id="g2g_status" type="text" name="g2g" class="form-control" value="" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label for="formulario">MRR </label>
+                                        <input id="mrr" type="text" name="mrr" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label for="formulario">TCV </label>
+                                        <input id="tcv" type="text" name="tcv" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label for="formulario">Owner </label>
+                                        <input type="text" name="owner" class="form-control" id="owner_edit" value="carfer@br.ibm.com" readonly/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <input type="hidden" name="isClosed" value="false" />
+                                    </div>
+                                </div>
+                            </fieldset>
                         </div>
-                     </div>
-                     <input type="submit" value="Submit" class="waves-effect waves-light btn blue darken-4">
-                  </div>
-               </section>
-            </form>
-         </div>
-         <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
-            <a class="btn-floating btn-large waves-effect waves-light blue darken-4" href="/getprojects">
+                    </div>
+                </div>
+                <input type="submit" value="Submit" class="waves-effect waves-light btn blue darken-4">
+                
+            </section>
+        </form>
+
+        <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large waves-effect waves-light blue darken-4" href="/panel">
                 <svg class="icon-carbon" viewBox='0 0 16 14' fill-rule='evenodd'><path d='M3.4 8H16V6H3.3l5-4.7L7 0 0 7l7 7 1.3-1.3z'></path></svg></a>
         </div>
-      </main>
-   </body>
+    </main>
+
+</body>
+
 </html>

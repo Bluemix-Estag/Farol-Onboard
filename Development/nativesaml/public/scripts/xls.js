@@ -9,7 +9,10 @@ $(function () {
 
 
 function filePicked(oEvent) {
+    $('#table_input_body').empty();
+
     // Get The File From The Input
+    $('#my_file_output').html('');
     var oFile = oEvent.target.files[0];
     var sFilename = oFile.name;
     // Create A File Reader HTML5
@@ -31,15 +34,15 @@ function filePicked(oEvent) {
                 header: 1
             });
             $.each(data, function (indexR, valueR) {
-                var sRow = "<tr name = cdd"+count+">";
+                var sRow = "<tr name = cdd" + count + ">";
                 $.each(data[indexR], function (indexC, valueC) {
                     if (indexC == 0 || indexR == 0) {
-                        sRow = sRow + "<td class=' blue lighten-2' id='tablegr'>" + valueC + "</td><input type='hidden'name='cdd"+count+"' value='"+valueC+"'/>";
+                        sRow = sRow + "<td class=' blue lighten-2' id='tablegr'>" + valueC + "</td><input type='hidden'name='cdd" + count + "' value='" + valueC + "'/>";
                     } else if (indexR == 10 || indexC == 0 && indexR == 10) {
-                        sRow = sRow + "<td id='tablegr' class=' light-green accent-4'>" + valueC + "</td><input type='hidden'name='cdd"+count+"' value='"+valueC+"'/>";
+                        sRow = sRow + "<td id='tablegr' class=' light-green accent-4'>" + valueC + "</td><input type='hidden'name='cdd" + count + "' value='" + valueC + "'/>";
 
                     } else {
-                        sRow = sRow + "<td id='tablegr'>" + valueC + "</td><input type='hidden'name='cdd"+count+"' value='"+valueC+"'/>";
+                        sRow = sRow + "<td id='tablegr'>" + valueC + "</td><input type='hidden'name='cdd" + count + "' value='" + valueC + "'/>";
 
                     }
                 });

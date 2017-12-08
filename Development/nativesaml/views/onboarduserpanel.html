@@ -2,52 +2,52 @@
 <html>
 
 <head>
-    <title>Farol Onboard</title>
-    <!--Import Google Icon Font-->
+    <title>Cloud Onboarding Tracker</title>
     <link href="https://unpkg.com/carbon-components/css/carbon-components.min.css" rel="stylesheet" />
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-    <link href="style/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="style/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
     <link href="style/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
-    <link href="style/picker.css" rel="stylesheet">
-    <link rel="stylesheet" href="/style/form.css" />
+    <link href="style/span.css" type="text/css" rel="stylesheet" media="screen,projection" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="scripts/materialize.js"></script>
+    <script src="scripts/materialize.min.js"></script>
+    <script src="scripts/methods.js"></script>
+    <script src="scripts/validate.js"></script>
     <script src="scripts/user.js"></script>
+    <script src="scripts/loginNav.js"></script>
+    <script src="scripts/util.js"></script>
 
-    <script src="scripts/picker.js"></script>
-    <script src="scripts/example.js"></script>
-
-    <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
 <body>
 
     <header>
-        <script>
-            $(document).ready(function(){
-                var obj = (getSession('userInfo'));
-                
-                document.getElementById('emailUser').innerHTML = "&nbsp; &nbsp; Email: &nbsp;" + obj.emailaddress ;
-                document.getElementById('nameUser').innerHTML = "&nbsp; Usuario: &nbsp; &nbsp;" + obj.cn;
 
-            })
-            
-
-        </script>
         <nav class="indigo" role="navigation">
             <div class="nav-wrapper">
-                <a style="margin-left: 20px;" class="breadcrumb" href="#!">Suas informações: </a>
-
+                <div style="margin-left: 20px;" class="left">
+                    <li class="breadcrumb" id="title-nav">Cloud Onboarding Tracker</li>
+                </div>
+                <a class="menu-filter right" href="#modal-filter"><span class="material-icons" id="filter-icon"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="25px" height="25px" viewBox="0 0 971.986 971.986" style="enable-background:new 0 0 971.986 971.986;"
+	 xml:space="preserve">
+<g><path d="M370.216,459.3c10.2,11.1,15.8,25.6,15.8,40.6v442c0,26.601,32.1,40.101,51.1,21.4l123.3-141.3
+		c16.5-19.8,25.6-29.601,25.6-49.2V500c0-15,5.7-29.5,15.8-40.601L955.615,75.5c26.5-28.8,6.101-75.5-33.1-75.5h-873
+		c-39.2,0-59.7,46.6-33.1,75.5L370.216,459.3z"fill="#FFFFFF"/></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g>
+</g><g></g><g></g><g></g><g></g></svg></span></a>
                 <div style="margin-right: 20px;" id="timestamp" class="right">
+                    <a href="/auth2">
+                        <div style="margin-right: 20px;" id="timestamp" class="right">
+                            <ul class="right hide-on-med-and-down">
+                                <li class="breadcrumb" id="logout">Logout</li>
+                            </ul>
+                        </div>
+                    </a>
                     <ul class="right hide-on-med-and-down">
-                        <li class="breadcrumb" id="emailUser"> </li>
+                        <li class="breadcrumb" id="emailUser"></li>
                     </ul>
                     <ul class="right hide-on-med-and-down">
-                        <li class="breadcrumb" id="nameUser"></li>
+                        <li class="breadcrumb" id="nameUser">&nbsp;</li>
                     </ul>
                 </div>
 
@@ -60,364 +60,363 @@
         <div class="row">
             <section class="main">
                 <div class="container1">
-                    <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
-                        <li class="tab col s3"><a href="#test-swipe-1" class=" active black-text text-darken-2">Global Projects</a></li>
-                        <li class="tab col s3"><a class="black-text text-darken-2" href="#test-swipe-2">Brazil Projects</a></li>
-                        <li class="tab col s2"><a href="#test-swipe-3" class="black-text text-darken-2">SSA Projects</a></li>
-                        <li class="tab col s2"><a href="#test-swipe-4" class="black-text text-darken-2">Mexico Projects</a></li>
-                        <li class="tab col s2"><a href="#closed-projects" class="black-text text-darken-2">Closed Projects</a></li>
-
-
+                    <ul class="tabs" style="overflow: hidden;">
+                        <li class="tab col s3"><a class="active black-text text-darken-2" href="#global-projects">Global Projects</a></li>
+                        <li class="tab col s3"><a class="black-text text-darken-2" href="#brazil-projects">Brazil Projects</a></li>
+                        <li class="tab col s2"><a class="black-text text-darken-2" href="#ssa-projects">SSA Projects</a></li>
+                        <li class="tab col s2"><a class="black-text text-darken-2" href="#mexico-projects">Mexico Projects</a></li>
+                        <li class="tab col s2 hide"><a class="black-text text-darken-2" href="#closed-projects">Closed Projects</a></li>
 
                     </ul>
+
                     <div class="row">
-                        <!--                       Global Projects Tab -->
-                        <div class="col-xs-6" id="test-swipe-1">
 
-                            <% if (projects == null){ %>
+                        <div class="col s12" id="global-projects">
 
-                                <h4>Voce nao possui projetos, peça um para que ele apareça aqui</h4>
-                                <%} else { %>
-                                    <!-- Page Layout here -->
-                            <div class="col s0 m0 l2">&nbsp</div>
-
-                            <!-- Cards container -->
-
-                            <div class="col s12 m12 l8">
-                                <div class="row">
-
-                                    <% for (var key in projects) { %>
-                                     <% if(projects[key].isClosed == 'false') { %>
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-engagement-global">0</span>Engagement</a>
+                            </div>
 
 
-                                            <a href="/getprojectbyid?id=<%=projects[key]._id %>">
-
-                                                <div class="col s12 m6 l4">
-                                                    <!-- Card 1 -->
-
-                                                        <div class="card">
-                                                            <div class="card-content white-text">
-                                                                <img src="https://res.cloudinary.com/dacg0wegv/image/upload/t_media_lib_thumb/v1463989969/squares_dylwo9.png" class="responsive-img" /><br>
-                                                                <span class="indigo-text text-lighten-1">
-                                                                    <h5><%= projects[key]._id %>
-                                                                    </h5></span>
-
-                                                            </div>
-
-                                                            <% if (projects[key].history === undefined) { %>
-                                                            <div class="card-action">
-
-                                                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
-                                                                    <b style="  font-size: 11px;">Situation at: <%= projects[key].lastUpdated %><span class="circle <%= projects[key].situation %> "></span></b>
-                                                                    </span>
-                                                            </div>
-                                                                
-                                                            <% } else { %>
-                                                            
-                                                            <div class="card-action">
-                                                                <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
-                                                                    <b style="  font-size: 11px;">Situation at: <%=             projects[key].lastUpdated %><span class="circle <%=projects[key].situation %> "></span> </b>
-                                                                     <% var numberOfUpdates = projects[key].history.length - 1%>
-                                                                    <b style="  font-size: 11px;">Situation at: <%=projects[key].history[numberOfUpdates].lastUpdated %><span class="circle 
-                                                                        
-                                                                        <%= projects[key].history[numberOfUpdates].situation %> "></span> </b>
-                                                                </span>
-                                                            </div>
-
-                                                                
-
-                                                            <% } %>
-                                                        </div>
-                                                        <!-- End of card -->
-                                                </div>
-                                            </a>
-
-                                            <%} else { %>
-                                                <% } %>
-
-
-                                                    <% }} %>
-
-                                </div>
-
+                            <div class="row" id="engagement-section-global">
 
                             </div>
-                        </div>
 
-                        <!--                        Brazil Tab            -->
-                        <div class="col-xs-6" id="test-swipe-2">
-                            <div class="col s0 m0 l2">&nbsp</div>
+                            <ul class="pagination center hide " id="engagement-section-global">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
 
-                            <!-- Cards container -->
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-onboard-global">0</span>Onboarding</a>
+                            </div>
 
-                            <div class="col s12 m12 l8">
-                                <div class="row">
-
-                                    <% for (var key in projects) { %>
-                                        <% if (projects[key].market == 'brazil' ){ %>
-                                            <% if(projects[key].isClosed == 'false') { %>
-                                            <a href="/getprojectbyid?id=<%=projects[key]._id %>">
-
-                                                <div class="col s12 m6 l4">
-                                                    <!-- Card 1 -->
-
-                                                        <div class="card">
-                                                            <div class="card-content white-text">
-                                                                <img src="https://res.cloudinary.com/dacg0wegv/image/upload/t_media_lib_thumb/v1463989969/squares_dylwo9.png" class="responsive-img" /><br>
-                                                                <span class="indigo-text text-lighten-1">
-                                                                    <h5><%= projects[key]._id %>
-                                                                    </h5></span>
-
-                                                            </div>
-
-                                                                <% if (projects[key].history === undefined) { %>
-                                                            <div class="card-action">
-
-                                                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
-                                                                    <b style="  font-size: 12px;">Situation at:<%= projects[key].lastUpdated %> <span class="circle <%= projects[key].situation %> "></span> </b>
-                                                                    </span>
-                                                            </div>
-                                                            <% } else { %>
-                                                            <div class="card-action">
-
-                                                                <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
-                                                                    <b style="  font-size: 11px;">Situation at:<%=             projects[key].lastUpdated %><span class="circle <%=projects[key].situation %> "></span> </b>
-                                                                     <% var numberOfUpdates = projects[key].history.length - 1%>
-                                                                    <b style="  font-size: 11px;">Situation at:<%=projects[key].history[numberOfUpdates].lastUpdated %><span class="circle 
-                                                                        
-                                                                        <%= projects[key].history[numberOfUpdates].situation %> "></span> </b>
-                                                                </span>
-                                                            </div>
-
-                                                                
-
-                                                            <% } %>
-                                                                <% } %>
-                                                        </div>
-                                                        <!-- End of card -->
-                                                </div>
-                                            </a>
-
-                                            <%} else { %>
-                                                <% } %>
-
-
-                                                    <% } %>
-
-                                </div>
-
+                            <div class="row" id="onboard-section-global">
 
                             </div>
-                        </div>
-                        <!--                                    SSA Tab-->
-                        <div class="col-xs-6" id="test-swipe-3">
-                            <!-- Page Layout here -->
-                            <div class="col s0 m0 l2">&nbsp</div>
 
-                            <!-- Cards container -->
+                            <ul class="pagination center hide" id="onboard-section-global">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
 
-                            <div class="col s12 m12 l8">
-                                <div class="row">
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-steady-global">0</span>Steady State</a>
+                            </div>
 
-                                    <% for (var key in projects) { %>
-                                        <% if (projects[key].market == 'ssa' ){ %>
-                                            <% if(projects[key].isClosed == 'false') { %>
-                                            <a href="/getprojectbyid?id=<%=projects[key]._id %>">
-
-                                                <div class="col s12 m6 l4">
-                                                    <!-- Card 1 -->
-
-                                                        <div class="card">
-                                                            <div class="card-content white-text">
-                                                                <img src="https://res.cloudinary.com/dacg0wegv/image/upload/t_media_lib_thumb/v1463989969/squares_dylwo9.png" class="responsive-img" /><br>
-                                                                <span class="indigo-text text-lighten-1">
-                                                                    <h5><%= projects[key]._id %>
-                                                                    </h5></span>
-
-                                                            </div>
-
-                                                                <% if (projects[key].history === undefined) { %>
-                                                            <div class="card-action">
-
-                                                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
-                                                                    <b style="  font-size: 12px;">Situation at:<%= projects[key].lastUpdated %> <span class="circle <%= projects[key].situation %> "></span> </b>
-                                                                    </span>
-                                                            </div>
-                                                            <% } else { %>
-                                                            <div class="card-action">
-
-                                                                <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
-                                                                    <b style="  font-size: 11px;">Situation at:<%=             projects[key].lastUpdated %><span class="circle <%=projects[key].situation %> "></span> </b>
-                                                                     <% var numberOfUpdates = projects[key].history.length - 1%>
-                                                                    <b style="  font-size: 11px;">Situation at:<%=projects[key].history[numberOfUpdates].lastUpdated %><span class="circle 
-                                                                        
-                                                                        <%= projects[key].history[numberOfUpdates].situation %> "></span> </b>
-                                                                </span>
-                                                            </div>
-
-                                                                
-
-                                                            <% } %>
-                                                                <% } %>
-                                                        </div>
-                                                        <!-- End of card -->
-                                                </div>
-                                            </a>
-
-                                            <%} else { %>
-                                                <% } %>
-
-
-                                                    <% } %>
-
-                                </div>
-
+                            <div class="row" id="steady-section-global">
 
                             </div>
+
+                            <ul class="pagination center hide" id="steady-section-global">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+
+
                         </div>
 
-                        <!--                                    MEX Tab-->
-                        <div class="col-xs-6" id="test-swipe-4">
-                             <!-- Page Layout here -->
-                            <div class="col s0 m0 l2">&nbsp</div>
 
-                            <!-- Cards container -->
-
-                            <div class="col s12 m12 l8">
-                                <div class="row">
-
-                                    <% for (var key in projects) { %>
-                                        <% if (projects[key].market == 'mexico' ){ %>
-                                            <% if(projects[key].isClosed == 'false') { %>
-                                            <a href="/getprojectbyid?id=<%=projects[key]._id %>">
-
-                                                <div class="col s12 m6 l4">
-                                                    <!-- Card 1 -->
-
-                                                        <div class="card">
-                                                            <div class="card-content white-text">
-                                                                <img src="https://res.cloudinary.com/dacg0wegv/image/upload/t_media_lib_thumb/v1463989969/squares_dylwo9.png" class="responsive-img" /><br>
-                                                                <span class="indigo-text text-lighten-1">
-                                                                    <h5><%= projects[key]._id %>
-                                                                    </h5></span>
-
-                                                            </div>
-
-                                                                <% if (projects[key].history === undefined) { %>
-                                                            <div class="card-action">
-
-                                                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
-                                                                    <b style="  font-size: 12px;">Situation at:<%= projects[key].lastUpdated %> <span class="circle <%= projects[key].situation %> "></span> </b>
-                                                                    </span>
-                                                            </div>
-                                                            <% } else { %>
-                                                            <div class="card-action">
-
-                                                                <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
-                                                                    <b style="  font-size: 11px;">Situation at:<%=             projects[key].lastUpdated %><span class="circle <%=projects[key].situation %> "></span> </b>
-                                                                     <% var numberOfUpdates = projects[key].history.length - 1%>
-                                                                    <b style="  font-size: 11px;">Situation at:<%=projects[key].history[numberOfUpdates].lastUpdated %><span class="circle 
-                                                                        
-                                                                        <%= projects[key].history[numberOfUpdates].situation %> "></span> </b>
-                                                                </span>
-                                                            </div>
-
-                                                                
-
-                                                            <% } %>
-                                                                <% } %>
-                                                        </div>
-                                                        <!-- End of card -->
-                                                </div>
-                                            </a>
-
-                                            <%} else { %>
-                                                <% } %>
+                        <!-- 
 
 
-                                                    <% } %>
+                            ############ BRAZIL TAB ##########
 
-                                </div>
+                        -->
 
+                        <div class="col-xs-6" id="brazil-projects">
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-engagement-brazil">0</span>Engagement</a>
+                            </div>
+
+
+                            <div class="row" id="engagement-section-brazil">
 
                             </div>
+
+                            <ul class="pagination center hide   " id="engagement-section-brazil">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-onboard-brazil">0</span>Onboarding</a>
+                            </div>
+
+                            <div class="row" id="onboard-section-brazil">
+
+                            </div>
+
+                            <ul class="pagination center hide" id="onboard-section-brazil">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-steady-brazil">0</span>Steady State</a>
+                            </div>
+
+                            <div class="row" id="steady-section-brazil">
+
+                            </div>
+
+                            <ul class="pagination center hide" id="steady-section-brazil">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+
+
                         </div>
-<!--                        Closed Projects Tab                                        -->
+
+                        <!--
+
+                                ############# SSA TAB ##############
+                            -->
+
+                        <div class="col-xs-6" id="ssa-projects">
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-engagement-ssa">0</span>Engagement</a>
+                            </div>
+
+
+                            <div class="row" id="engagement-section-ssa">
+
+                            </div>
+
+                            <ul class="pagination center hide" id="engagement-section-ssa">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-onboard-ssa">0</span>Onboarding</a>
+                            </div>
+
+                            <div class="row" id="onboard-section-ssa">
+
+                            </div>
+
+                            <ul class="pagination center hide" id="onboard-section-ssa">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-steady-ssa">0</span>Steady State</a>
+                            </div>
+
+                            <div class="row" id="steady-section-ssa">
+
+                            </div>
+
+                            <ul class="pagination center hide" id="steady-section-ssa">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+
+                        </div>
+
+                        <!--                        
+
+                                                ########### MEX TAB ##########
+    
+                        -->
+
+                        <div class="col-xs-6" id="mexico-projects">
+
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-engagement-mexico">0</span>Engagement</a>
+                            </div>
+
+
+                            <div class="row" id="engagement-section-mexico">
+
+                            </div>
+
+                            <ul class="pagination center hide" id="engagement-section-mexico">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-onboard-mexico">0</span>Onboarding</a>
+                            </div>
+
+                            <div class="row" id="onboard-section-mexico">
+
+                            </div>
+
+                            <ul class="pagination center hide" id="onboard-section-mexico">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-steady-mexico">0</span>Steady State</a>
+                            </div>
+
+                            <div class="row" id="steady-section-mexico">
+
+                            </div>
+
+                            <ul class="pagination center hide" id="steady-section-mexico">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+
+                        </div>
+
+
+                        <!--                        ####### Closed Tab #########-->
                         <div class="col-xs-6" id="closed-projects">
-
-                             <!-- Page Layout here -->
-                            <div class="col s0 m0 l2">&nbsp</div>
-
-                            <!-- Cards container -->
-
-                            <div class="col s12 m12 l8">
-                                <div class="row">
-
-                                    <% for (var key in projects) { %>
-                                      <% if(projects[key].isClosed == 'true') { %>
-
-                                            <a href="/getclosedproject?id=<%=projects[key]._id %>">
-
-                                                <div class="col s12 m6 l4">
-                                                    <!-- Card 1 -->
-
-                                                        <div class="card">
-                                                            <div class="card-content white-text">
-                                                                <img src="https://res.cloudinary.com/dacg0wegv/image/upload/t_media_lib_thumb/v1463989969/squares_dylwo9.png" class="responsive-img" /><br>
-                                                                <span class="indigo-text text-lighten-1">
-                                                                    <h5><%= projects[key]._id %>
-                                                                    </h5></span>
-
-                                                            </div>
-
-                                                                <% if (projects[key].history === undefined) { %>
-                                                            <div class="card-action">
-
-                                                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
-                                                                    <b style="  font-size: 12px;">Situation at:<%= projects[key].lastUpdated %> <span class="circle <%= projects[key].situation %> "></span> </b>
-                                                                    </span>
-                                                            </div>
-                                                            <% } else { %>
-                                                            <div class="card-action">
-
-                                                                <span class="card-title" style="text-align: center !important; font-size: 16pt !important;">
-                                                                    <b style="  font-size: 11px;">Situation at:<%=             projects[key].lastUpdated %><span class="circle <%=projects[key].situation %> "></span> </b>
-                                                                     <% var numberOfUpdates = projects[key].history.length - 1%>
-                                                                    <b style="  font-size: 11px;">Situation at:<%=projects[key].history[numberOfUpdates].lastUpdated %><span class="circle 
-                                                                        
-                                                                        <%= projects[key].history[numberOfUpdates].situation %> "></span> </b>
-                                                                </span>
-                                                            </div>
-
-                                                                
-
-                                                            <% } %>
-                                                        </div>
-                                                        <!-- End of card -->
-                                                </div>
-                                            </a>
-
-                                            <% } %>
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-engagement-closed">0</span>Engagement</a>
+                            </div>
 
 
-                                                    <% } %>
-
-                                </div>
-
+                            <div class="row" id="engagement-section-closed">
 
                             </div>
-                        </div>
 
+                            <ul class="pagination center hide" id="engagement-section-closed">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-onboard-closed">0</span>Onboarding</a>
+                            </div>
+
+                            <div class="row" id="onboard-section-closed">
+
+                            </div>
+
+                            <ul class="pagination center hide" id="onboard-section-closed">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+
+                            <div class="collection">
+                                <a href="#!" class="collection-item"><span class="badge" id="sizeof-steady-closed">0</span>Steady State</a>
+                            </div>
+
+                            <div class="row" id="steady-section-closed">
+
+                            </div>
+
+                            <ul class="pagination center hide" id="steady-section-closed">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+
+
+                        </div>
 
                     </div>
             </section>
 
+            <!-- Modal for filter -->
+            <!-- Modal Trigger -->
+            <!-- Modal Structure -->
+            <div id="modal-filter" class="modal">
+                <div class="modal-content">
+                    <h4>Filtro</h4>
+                    <div class="input-field col s12">
+                        <select id="options-filter">
+                <option value="" selected>Listar Todos</option>
+                <option value="1">Engagement</option>
+                <option value="2">Onboarding</option>
+                <option value="3">Steady State</option>
+              </select>
+                        <label>Materialize Select</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="choose-filter">Agree</a>
+                </div>
+            </div>
+            <!--                  -->
 
             <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
-                <a class="btn-floating btn-large waves-effect waves-light indigo" href="/insert">
+                <a class="btn-floating btn-large waves-effect waves-light indigo white-text" href="/insert">
                     <svg class="icon-carbon" viewBox="0 0 24 24" fill-rule="evenodd">
-                        <path d="M14 0h-4v10H0v4h10v10h4V14h10v-4H14z"/>
-                    </svg>
+            <path d="M14 0h-4v10H0v4h10v10h4V14h10v-4H14z" />
+          </svg>
                 </a>
             </div>
     </main>

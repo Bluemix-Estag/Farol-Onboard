@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+    <title>Farol Onboard</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="style/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="style/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <script src="scripts/user.js"></script>
+    <script src="scripts/util.js"></script>
+
+
+</head>
+
+<body>
+
+    <form action="/panel" method="get" id="form">
+    </form>
+    <script>
+
+        var obj = (getSession('userInfo'));
+        xhrGet('/validateUser?user=' + obj.emailaddress, function(result) {
+
+            if (result.message == "Access Granted") {
+                console.log("xhr 200");
+                submitform();
+
+            } else {
+                console.log("xhr 401");
+                window.location.replace('usernotautorized');
+
+            }
+
+
+        });
+
+        function submitform() {
+            document.forms["form"].submit();
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -56,7 +56,7 @@ function xhrAttach(url, data, callback, errback)
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4){
 			if(xhr.status == 200){
-				callback(parseJson(xhr.responseText));
+				callback((xhr.responseText));
 			}else{
 				errback('service not available');
 			}
@@ -85,6 +85,24 @@ function xhrPost(url, data, callback, errback){
 	xhr.send(objectToQuery(data));
 }
 
+function xhrPostNoJSON(url, data, callback, errback){
+	var xhr = new createXHR();
+	xhr.open("POST", url, true);
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4){
+			if(xhr.status == 200){
+				callback(xhr.responseText);
+			}else{
+				errback('service not available');
+			}
+		}
+	};
+	xhr.timeout = 100000;
+	xhr.ontimeout = errback;
+	xhr.send(data);
+}
+
+
 function xhrDelete(url, callback, errback){	
 	var xhr = new createXHR();
 	xhr.open("DELETE", url, true);
@@ -103,8 +121,9 @@ function xhrDelete(url, callback, errback){
 }
 
 function parseJson(str){
-	return window.JSON ? JSON.parse(str) : eval('(' + str + ')');
+		return window.JSON ? JSON.parse(str) : eval('(' + str + ')');
 }
+
 
 function objectToQuery(map){
 	var enc = encodeURIComponent, pairs = [];

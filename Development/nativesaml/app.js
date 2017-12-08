@@ -130,7 +130,60 @@ app.get('/codebakeryuser', function (req, res) {
 })
 
 app.get('/onboarduserp', function (req, res) {
-    res.redirect('/getprojects')
+    res.redirect('/panel')
+})
+
+app.get('/panel', function (req, res) {
+    res.render('onboarduserpanel.html')
+})
+
+app.get('/auth2', function (req, res) {
+    res.render('auth2.html')
+})
+
+app.post('/blabla', (req,res) =>{
+    console.log('entrou ');
+    let teste = req.body;
+    console.log(teste);
+})
+
+app.post("/updateInput", function(req,res){
+    var formIn = req.body;
+    let project_id = formIn.id;
+    
+    console.log(JSON.stringify(formIn));
+    var headers = {
+        'url': dbCredentials.url,
+        'Content-Type': 'application/json'
+    }
+    
+    var updateDate = new Date().toISOString().replace(/T/, ' '). // replace T with a space
+    replace(/\..+/, '') // delete the dot and everything after;
+
+    formIn.lastUpdated = updateDate;
+    delete formIn.id;
+    
+    var options = {
+        url: 'http://manageio.mybluemix.net/api/project/onboarding/'+project_id+'/properties',
+        method: 'POST',
+        headers: headers,
+        form: formIn
+    }
+    console.log(JSON.stringify(options));
+
+    request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(JSON.stringify(body));
+            res.status(200).json({err: false})
+        } else {
+            console.log('erro no request');
+            console.log(JSON.stringify(body));
+            res.status(500).send('Error in UPDATE.');
+
+        }
+
+    })
+    
 })
 
 
@@ -142,42 +195,28 @@ app.post("/confirminsert", function (req, res) {
         'url': dbCredentials.url,
         'Content-Type': 'application/json'
     }
-    var names = {
-        'seller': {
-            'name': formIn.name[0],
-            'email': formIn.email[0],
-            'idnotes': formIn.idnotes[0],
-            'phone': formIn.phone[0]
-        },
-        'techseller': {
-            'name': formIn.name[1],
-            'email': formIn.email[1],
-            'idnotes': formIn.idnotes[1],
-            'phone': formIn.phone[1]
-        },
-        'cloudpm': {
-            'name': formIn.name[2],
-            'email': formIn.email[2],
-            'idnotes': formIn.idnotes[2],
-            'phone': formIn.phone[2]
-        },
-        'localpm': {
-            'name': formIn.name[3],
-            'email': formIn.email[3],
-            'idnotes': formIn.idnotes[3],
-            'phone': formIn.phone[3]
-        },
-        'cloudpe': {
-            'name': formIn.name[4],
-            'email': formIn.email[4],
-            'idnotes': formIn.idnotes[4],
-            'phone': formIn.phone[4]
-        },
-        'customer': {
-            'name': formIn.name[5],
-            'email': formIn.email[5],
-            'idnotes': formIn.idnotes[5],
-            'phone': formIn.phone[5]
+
+    var names = [];
+    if (typeof (formIn.name) == 'string') {
+        names.push({
+            'state': formIn.state,
+            'name': formIn.name,
+            'email': formIn.email,
+            'phone': formIn.phone,
+            'idnotes': formIn.idnotes
+        });
+    } else {
+        for (var key in formIn.name) {
+            console.log(key);
+            names.push({
+                'state': formIn.state[key],
+                'name': formIn.name[key],
+                'email': formIn.email[key],
+                'phone': formIn.phone[key],
+                'idnotes': formIn.idnotes[key]
+            });
+
+
         }
     }
 
@@ -187,6 +226,7 @@ app.post("/confirminsert", function (req, res) {
     delete formIn.email
     delete formIn.idnotes;
     delete formIn.phone;
+    delete formIn.state;
 
     var updateDate = new Date().toISOString().replace(/T/, ' '). // replace T with a space
     replace(/\..+/, '') // delete the dot and everything after;
@@ -202,13 +242,13 @@ app.post("/confirminsert", function (req, res) {
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             setTimeout(function () {
-                res.redirect('/getprojects');
+                res.redirect('/panel');
             }, 4000);
         } else {
             console.log('erro no request');
             res.status(500).send('Error in INSERT. Please try again with another UNIQUE ID or try it later');
-            
-         }
+
+        }
 
     })
 
@@ -216,48 +256,35 @@ app.post("/confirminsert", function (req, res) {
 
 app.post("/confirmupdate", function (req, res) {
     var formIn = req.body;
+    console.log(formIn);
     formIn.w3id_owner = 'carfer@br.ibm.com';
 
     var headers = {
         'url': dbCredentials.url,
         'Content-Type': 'application/json'
     }
-    var names = {
-        'seller': {
-            'name': formIn.name[0],
-            'email': formIn.email[0],
-            'idnotes': formIn.idnotes[0],
-            'phone': formIn.phone[0]
-        },
-        'techseller': {
-            'name': formIn.name[1],
-            'email': formIn.email[1],
-            'idnotes': formIn.idnotes[1],
-            'phone': formIn.phone[1]
-        },
-        'cloudpm': {
-            'name': formIn.name[2],
-            'email': formIn.email[2],
-            'idnotes': formIn.idnotes[2],
-            'phone': formIn.phone[2]
-        },
-        'localpm': {
-            'name': formIn.name[3],
-            'email': formIn.email[3],
-            'idnotes': formIn.idnotes[3],
-            'phone': formIn.phone[3]
-        },
-        'cloudpe': {
-            'name': formIn.name[4],
-            'email': formIn.email[4],
-            'idnotes': formIn.idnotes[4],
-            'phone': formIn.phone[4]
-        },
-        'customer': {
-            'name': formIn.name[5],
-            'email': formIn.email[5],
-            'idnotes': formIn.idnotes[5],
-            'phone': formIn.phone[5]
+
+    var names = [];
+    if (typeof (formIn.name) == 'string') {
+        names.push({
+            'state': formIn.state,
+            'name': formIn.name,
+            'email': formIn.email,
+            'phone': formIn.phone,
+            'idnotes': formIn.idnotes
+        });
+    } else {
+        for (var key in formIn.name) {
+            console.log(key);
+            names.push({
+                'state': formIn.state[key],
+                'name': formIn.name[key],
+                'email': formIn.email[key],
+                'phone': formIn.phone[key],
+                'idnotes': formIn.idnotes[key]
+            });
+
+
         }
     }
 
@@ -267,6 +294,7 @@ app.post("/confirmupdate", function (req, res) {
     delete formIn.email
     delete formIn.idnotes;
     delete formIn.phone;
+    delete formIn.state;
 
 
 
@@ -281,13 +309,15 @@ app.post("/confirmupdate", function (req, res) {
         headers: headers,
         form: formIn
     }
+    
+    console.log(JSON.stringify(options));
 
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(body);
 
             setTimeout(function () {
-                res.redirect('/getprojects');
+                res.redirect('/panel');
             }, 4000);
         } else {
             console.log('erro no request');
@@ -298,6 +328,28 @@ app.post("/confirmupdate", function (req, res) {
 
 });
 
+// TA AQUI 
+
+app.get('/onboardprojectinfo', (req, res) => {
+    res.render('onboardprojectinfo2.html');
+})
+
+//
+
+
+app.get("/editproject", function (req, res) {
+
+    res.render("editprojectpage.html");
+
+});
+
+
+app.get('/download', function(req, res){
+  var file = __dirname + '/sample.xls';
+  res.download(file); // Set disposition and send it.
+});
+
+
 
 app.get("/getprojects", function (req, res) {
 
@@ -305,6 +357,7 @@ app.get("/getprojects", function (req, res) {
         'url': dbCredentials.url,
         'Content-Type': 'application/json'
     }
+
     var options = {
         url: 'http://manageio.mybluemix.net/api/project/onboarding/all',
         method: 'GET',
@@ -314,16 +367,48 @@ app.get("/getprojects", function (req, res) {
     request(options, function (error, response, body) {
 
         if (!error && response.statusCode == 200) {
-            console.log(body);
-            res.render('onboarduserpanel.html', {
-                projects: JSON.parse(body)
-            });
+            console.log("Entrou no getprojects");
+            res.send(body);
 
         } else {
             console.log('error no request get projects');
         }
     })
 
+
+});
+
+app.get("/validateUser", function (req, res) {
+
+    var user = req.query.user;
+    var headers = {
+        'url': dbCredentials.url,
+        'Content-Type': 'application/json'
+    }
+
+    var options = {
+        url: 'http://manageio.mybluemix.net/api/users/onboarding/admins?w3id=' + user,
+        method: 'GET',
+        headers: headers
+    }
+
+    request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log("Permission Granted");
+            res.send(body);
+        } else {
+            console.log("Permission Denied");
+            res.send(body);
+        }
+    })
+
+})
+
+
+
+app.get("/usernotautorized", function (req, res) {
+
+    res.render("error.html");
 
 });
 
@@ -347,9 +432,10 @@ app.get("/getprojectbyid", function (req, res) {
         if (!error && response.statusCode == 200) {
             console.log(JSON.parse(body));
 
-            res.render('onboardprojectinfo.html', {
-                project: JSON.parse(body)
-            });
+            //            res.render('onboardprojectinfo.html', {
+            //                project: JSON.parse(body)
+            //            });
+            res.send(body);
         }
     })
 
@@ -383,31 +469,13 @@ app.get("/getclosedproject", function (req, res) {
 
 });
 
-app.get("/editproject", function (req, res) {
+app.get("/auth", function (req, res) {
 
-    var id = req.query.id;
+    res.render("auth.html");
 
-    var headers = {
-        'url': dbCredentials.url,
-        'Content-Type': 'application/json'
-    }
-
-    var options = {
-        url: 'http://manageio.mybluemix.net/api/project/onboarding?id=' + id,
-        method: 'GET',
-        headers: headers
-    }
-
-    request(options, function (error, response, body) {
-
-        if (!error && response.statusCode == 200) {
-            res.render('editprojectpage.html', {
-                project: JSON.parse(body)
-            });
-        }
-    })
 
 });
+
 
 app.get("/getprojectusers", function (req, res) {
     var projectname = req.query.query;
@@ -431,6 +499,11 @@ app.get("/getprojectusers", function (req, res) {
     })
 
 });
+
+app.get("/summary", function (req, res) {
+
+    res.redirect("http://manageio.mybluemix.net/api/project/onboarding/summary")
+})
 
 
 app.post("/deleteproject", function (req, res) {
@@ -456,7 +529,7 @@ app.post("/deleteproject", function (req, res) {
         if (!error && response.statusCode == 200) {
 
             setTimeout(function () {
-                res.redirect('/getprojects');
+                res.redirect('/h');
             }, 2000)
         } else {
             console.log(options);
@@ -473,31 +546,30 @@ app.post("/closeproject", function (req, res) {
         'url': dbCredentials.url,
         'Content-Type': 'application/json'
     }
-    
+
     var updateDate = new Date().toISOString().replace(/T/, ' '). // replace T with a space
     replace(/\..+/, '') // delete the dot and everything after;
 
     formIn.lastUpdated = updateDate;
-    
+
     var options = {
         url: 'http://manageio.mybluemix.net/api/project/onboarding/' + projectid + '/update',
         method: 'POST',
         headers: headers,
         form: {
             "isClosed": 'true',
-            "dateClosed" : updateDate,
-            "whoClose" : formIn.closedBy,
-            "rev": formIn.rev,
+            "dateClosed": updateDate,
+            "whoClose": formIn.closedBy,
             "id": projectid
         }
     }
-    
+
     request(options, function (error, response, body) {
 
         if (!error && response.statusCode == 200) {
 
             setTimeout(function () {
-                res.redirect('/getprojects');
+                res.redirect('/panel');
             }, 2000)
         } else {
             console.log(options);
@@ -528,17 +600,13 @@ app.get('/', function (req, res) {
     res.render('index.html');
 })
 
+app.get('/index2', function (req, res) {
+    res.render('index2.html');
+})
+
 app.get('/hoome', function (req, res) {
 
-    var userS = {
-
-            "cn": "Carlos",
-            "emailaddress": "carlos@gm"
-
-    }
-    res.render('home.html', {
-        user: userS
-    });
+    res.render('onboarduserpanel.html');
 })
 
 app.post('/getxls', function (req, res) {

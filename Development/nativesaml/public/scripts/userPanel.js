@@ -6,7 +6,6 @@ $('select').material_select();
 
 function getProjectID(id) {
     var id = document.getElementById(id);
-
     return id;
 
 }

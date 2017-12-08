@@ -1,0 +1,21 @@
+td {
+    /* CSS3 */
+    white-space: pre-wrap;
+    /* Firefox */
+    white-space: -moz-pre-wrap;
+    /* Opera <7 */
+    white-space: -pre-wrap;
+    /* Opera 7 */
+    white-space: -o-pre-wrap;
+    /* IE */
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+#last_actions_historic {
+    height: auto;
+}
+
+#last_actions_status {
+    height: auto;
+}

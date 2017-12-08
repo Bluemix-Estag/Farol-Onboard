@@ -4,31 +4,23 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
-    <title>Code Bakery</title>
+    <title>Cloud Onboarding Tracker</title>
 
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="style/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
     <link href="style/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
     <script src="scripts/user.js"></script>
+    <script src="scripts/util.js"></script>
 
 
 </head>
 
-<body onload="setSession('userInfo', JSON.parse(document.getElementById('user').value)); submitform()">
+<body>
 
     <input type="hidden" id="user" value="<%= JSON.stringify(user) %>" />
 
-    <script>
-        var obj = (getSession('userInfo'));
-
-        function submitform() {
-            document.forms["form"].submit();
-        }
-
-    </script>
-
-    <form action="/getprojects" method="get" id="form">
+    <form action="/auth" method="get" id="form">
     </form>
     <div class="center">
 
@@ -46,6 +38,16 @@
             </div>
         </div>
     </div>
+    <script>
+        setSession('userInfo', JSON.parse(document.getElementById('user').value));
+        function submitform() {
+                    document.forms["form"].submit();
+        }
+        submitform();
+
+    </script>
+    
+    <h3> Reload this page if it takes a long time. </h3>
 </body>
 
 </html>

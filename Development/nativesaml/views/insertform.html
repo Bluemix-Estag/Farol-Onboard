@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Farol Onboard</title>
+    <title>Cloud Onboarding Tracker</title>
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -17,12 +17,15 @@
     <script src="scripts/jquery.min.js"></script>
     <script src="scripts/jquery-1.8.2.js"></script>
     <script src="scripts/jquery-ui.js"></script>
+    <script src="scripts/validate.js"></script>
+    <script src="scripts/insert.js"></script>
+
     <!--    Fim Calendario-->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xls/0.7.4-a/xls.js"></script>
     <script src="scripts/materialize.js"></script>
     <script src="scripts/user.js"></script>
-
+    <script src="scripts/loginNav.js"></script>
     <script src="scripts/xls.js"></script>
 
 
@@ -31,6 +34,7 @@
 
 
     <style>
+        
         td {
             /* CSS3 */
             white-space: pre-wrap;
@@ -59,6 +63,8 @@
         .pinned {
             position: fixed !important;
         }
+        
+        
 
     </style>
 
@@ -107,16 +113,12 @@
     </script>
     <script src="scripts/userPanel.js"></script>
     <script>
-     $(document).ready(function(){
-                var obj = (getSession('userInfo'));
-                
-                document.getElementById('emailUser').innerHTML = "&nbsp; &nbsp; Email: &nbsp;" + obj.emailaddress ;
-                document.getElementById('nameUser').innerHTML = "&nbsp; Usuario: &nbsp; &nbsp;" + obj.cn;
-//                document.getElementById('ownerEdit').innerHTML = obj.cn;
-                document.getElementById('ownerEdit').value = obj.emailaddress;
+        $(document).ready(function() {
+            var obj = (getSession('userInfo'));
+            document.getElementById('ownerEdit').value = obj.emailaddress;
 
-            })
-            
+        })
+
     </script>
 
 
@@ -124,14 +126,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
-<body>
+<body onload="refreshSelect(); createName();">
 
     <header>
         <div class="row">
             <nav class="pushpin-demo-nav pinned blue darken-4" style="z-index: 999999 !important;" role="navigation">
                 <div class="nav-wrapper">
                     <!--                Alterar href para a pagina hosteada no bluemix, atualmente é para local-->
-                    <a style="margin-left: 20px;" class="breadcrumb" href="/onboarduserp">Suas informações: </a>
+                    <a style="margin-left: 20px;" class="breadcrumb" href="/onboarduserp"></a>
 
                     <div style="margin-right: 20px;" id="timestamp" class="right">
                         <ul class="right hide-on-med-and-down">
@@ -150,279 +152,197 @@
                     </ul>
                 </div>
             </nav>
-        
+        </div>
     </header>
 
     <main>
-            <form action="/confirminsert" method="POST">
-                <section class="main">
-                    <div class="container1">
-                        <div class="row">
+        <form action="/confirminsert" method="POST">
+            <section class="main">
+                <div class="container1">
+                    <div class="row">
 
-                            <!--                        Dates Tab            -->
-                            <div class="col-xs-8" id="test-swipe-2">
-                                <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
-                                    <li class="tab col s4"><a href="#test-swipe-7" class=" black-text text-darken-2">CDD</a></li>
-                                    <li class="tab col s4"><a href="#test-swipe-8" class=" black-text text-darken-2">Date</a></li>
+                        <!--                        Dates Tab            -->
+                        <div class="col-xs-8" id="test-swipe-2">
+                            <ul id="tabs-swipe-demo" class="tabs" style="overflow: hidden;">
+                                <li class="tab col s4"><a href="#test-swipe-7" class=" black-text text-darken-2">CDD</a></li>
+                                <li class="tab col s4"><a href="#test-swipe-8" class=" black-text text-darken-2">Date</a></li>
 
-                                </ul>
-                                <div class="col-xs-8" id="test-swipe-7">
-
-                                    <form action="getxls" method="post">
-                                        <input type="file" id="my_file_input" />
-                                        <table class="responsive-table bordered ">
-                                            <tbody id='my_file_output'>
-                                            </tbody>
-                                        </table>
-                                    </form>
-                                </div>
-                                <div class="col-xs-8" id="test-swipe-8">
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <p>Data: <input name="DATE" type="text" id="calendario" /></p>
-
-                                        </div>
-                                    </div>
-
-                                    <!--                                        Calendar-->
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-
-                                            <p>ETA: <input name="eta" type="text" id="calendario2" /></p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!--                                    Names Tab-->
-                            <div class="col-xs-6" id="test-swipe-3">
+                            </ul>
+                            <div class="col-xs-8" id="test-swipe-7">
                                 <fieldset>
-                                    <!--                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;"> Edite seu projeto</span>-->
+                                    <div class="row">
+                                        <div class="col s6">
 
-                                    <!--                                        Seller Row-->
-                                    <div class="row">
-                                        <div class="input-field inline col s3">
-                                            <input name="name" placeholder="Seller Name" id="name_seller" type="text" class="validate" required>
-                                            <label for="name_seller">Seller Name</label>
+                                            <a class="waves-effect waves-light btn blue darken-4" href="/download">Download Sample XLS</a> <br><br>
+
                                         </div>
-                                        <div class="input-field inline  col s3">
-                                            <input name="email" id="email" type="text" class="validate" required>
-                                            <label for="email_seller">Email</label>
-                                        </div>
-                                        <div class="input-field inline col s3">
-                                            <input name="idnotes" id="idnotes_seller" type="text" class="validate" required>
-                                            <label for="idnotes_seller">ID Notes</label>
-                                        </div>
-                                        <div class="input-field inline col s3">
-                                            <input name="phone" id="Phone" type="text" class="validate" required>
-                                            <label for="phone_seller">Phone</label>
-                                        </div>
+                                        <form action="getxls" method="post">
+                                            <!--                                            <input type="file" name="my_file_input" id="my_file_input" />-->
+                                            <!--                                            <label for="my_file_input" class="waves-effect waves-light btn blue darken-4">Choose a file</label>-->
+                                            <div class="waves-effect waves-light btn blue darken-4">
+                                                <span class="fake-btn">Choose files</span>
+                                                <input class="file-input" type="file" id="my_file_input" multiple>
+                                            </div>
+
+                                            <table class="responsive-table bordered ">
+                                                <tbody id='my_file_output'>
+                                                </tbody>
+                                            </table>
+                                        </form>
                                     </div>
-                                    <!--                                        TechSeller Row-->
-                                    <div class="row">
-                                        <div class="input-field inline col s3">
-                                            <input name="name" placeholder="Tech Seller Name" id="name_seller" type="text" class="validate" required>
-                                            <label for="name_tseller">Tech Seller Name</label>
-                                        </div>
-                                        <div class="input-field inline  col s3">
-                                            <input name="email" id="email" type="text" class="validate" required>
-                                            <label for="email">Email</label>
-                                        </div>
-                                        <div class="input-field inline col s3">
-                                            <input name="idnotes" id="idnotes_techseller" type="text" class="validate" required>
-                                            <label for="idnotes_techseller">ID Notes</label>
-                                        </div>
-                                        <div class="input-field inline col s3">
-                                            <input name="phone" id="Phone" type="text" class="validate" required>
-                                            <label for="phone_tseller">Phone</label>
-                                        </div>
-                                    </div>
-                                    <!--                                        Cloud PM Row -->
-                                    <div class="row">
-                                        <div class="input-field inline col s3">
-                                            <input name="name" placeholder="Cloud PM Name" id="name_seller" type="text" class="validate" required>
-                                            <label for="name_cp">Cloud PM</label>
-                                        </div>
-                                        <div class="input-field inline  col s3">
-                                            <input name="email" id="email" type="text" class="validate" required>
-                                            <label for="email_cp">Email</label>
-                                        </div>
-                                        <div class="input-field inline col s3">
-                                            <input name="idnotes" id="idnotes_cloudpm" type="text" class="validate" required>
-                                            <label for="idnotes_cloudpm">ID Notes</label>
-                                        </div>
-                                        <div class="input-field inline col s3">
-                                            <input name="phone" id="Phone" type="text" class="validate" required>
-                                            <label for="phone_cp">Phone</label>
-                                        </div>
-                                    </div>
-                                    <!--                                    Local PM row-->
-                                    <div class="row">
-                                        <div class="input-field inline col s3 ">
-                                            <input name="name" placeholder="Local PM Name" id="name_seller" type="text" class="validate" required>
-                                            <label for="name_lp">Local PM</label>
-                                        </div>
-                                        <div class="input-field inline  col s3">
-                                            <input name="email" id="email" type="text" class="validate" required>
-                                            <label for="email_lp">Email</label>
-                                        </div>
-                                        <div class="input-field inline col s3">
-                                            <input name="idnotes" id="idnotes_localpm" type="text" class="validate" required>
-                                            <label for="idnotes_localpm">ID Notes</label>
-                                        </div>
-                                        <div class="input-field inline col s3">
-                                            <input name="phone" id="Phone" type="text" class="validate" required>
-                                            <label for="phone_lp">Phone</label>
-                                        </div>
-                                    </div>
-                                    <!--                                        Cloud DPE-->
-                                    <div class="row">
-                                        <div class="input-field inline col s3">
-                                            <input name="name" placeholder="Local DPE Name" id="localdpe_name" type="text" class="validate" required>
-                                            <label for="name_dpe">Local DPE</label>
-                                        </div>
-                                        <div class="input-field inline  col s3">
-                                            <input name="email" id="email" type="text" class="validate" required>
-                                            <label for="email_dpe">Email</label>
-                                        </div>
-                                        <div class="input-field inline col s3">
-                                            <input name="idnotes" id="idnotes_dpe" type="text" class="validate" required>
-                                            <label for="idnotes_dpe">ID Notes</label>
-                                        </div>
-                                        <div class="input-field inline col s3">
-                                            <input name="phone" id="Phone" type="text" class="validate" required>
-                                            <label for="phone_dpe">Phone</label>
-                                        </div>
-                                    </div>
-                                    <!--                                        Customer -->
+                                </fieldset>
+
+                            </div>
+                            <div class="col-xs-8" id="test-swipe-8">
+                                <fieldset>
                                     <div class="row">
 
-                                        <div class="input-field inline col s3">
-                                            <input placeholder="Customer" name="name" id="name_customer" type="text" class="validate" required>
-                                            <label for="name_customer">Customer</label>
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <p>Data: <input name="DATE" type="text" id="calendario" /></p>
+
+                                            </div>
                                         </div>
-                                        <div class="input-field inline  col s3">
-                                            <input name="email" id="email" type="text" class="validate" required>
-                                            <label for="email_customer">Email</label>
-                                        </div>
-                                        <div class="input-field inline col s3">
-                                            <input name="idnotes" id="idnotes_customer" type="text" class="validate" required>
-                                            <label for="idnotes_customer">ID Notes</label>
-                                        </div>
-                                        <div class="input-field inline col s3">
-                                            <input name="phone" id="phone_customer" type="text" class="validate" required>
-                                            <label for="phone_customer">Phone</label>
+
+                                        <!--                                        Calendar-->
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+
+                                                <p>ETA: <input name="eta" type="text" id="calendario2" /></p>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
                             </div>
-                            <!--                                        Status Tab-->
-                            <div class="col-xs-6" id="test-swipe-4">
-                                <fieldset>
-                                    <!--                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;"> Edite seu projeto</span>-->
-                                    <div class="form-group">
-                                        <div class="col-md-4">
+                        </div>
 
-                                            <label>Market Select</label>
-                                            <select name="market" class="browser-default" required>
+                        <!--                                    Names Tab-->
+                        <div class="col-xs-6" id="test-swipe-3" onclick="refreshSelect()">
+                            <fieldset>
+                                <h6>Leave the default value if the person does not have it</h6>
+                                <div id="names-tab">
+                                    <div class="row">
+                                    </div>
+                                </div>
+                                <a class="waves-effect waves-light btn blue darken-4" onclick="createName();">Add Name</a>
+                            </fieldset>
+                        </div>
+                        <!--                                        Status Tab-->
+                        <div class="col-xs-6" id="test-swipe-4">
+                            <fieldset>
+                                <!--                                    <span class="card-title" style="text-align: center !important; font-size: 16pt !important;"> Edite seu projeto</span>-->
+                                <div class="form-group">
+                                    <div class="col-md-4">
+
+                                        <label>Market Select</label>
+                                        <select name="market" class="browser-default" required>
                                             <option value="" disabled selected>Choose project market</option>
-                                            <option value="brazil">Brazil</option>
-                                            <option value="ssa">SSA</option>
-                                            <option value="mexico">Mexico</option>
+                                            <option value="Brazil">Brazil</option>
+                                            <option value="SSA">SSA</option>
+                                            <option value="Mexico">Mexico</option>
                                             </select>
-                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <label>Offer</label>
-                                            <select name="offer" class="browser-default" required>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label>Offer</label>
+                                        <select name="offer" class="browser-default" required>
                                                             <option value="" disabled selected>Choose Project Offer</option>
-                                                            <option value="C4SAP">C4SAP</option>
-                                                            <option value="C4ORACLE">C4ORACLE</option>
                                                             <option value="Bluemix">Bluemix</option>
-                                                   </select>
-                                        </div>
+                                                            <option value="C4ORACLE">C4ORACLE</option>
+                                                            <option value="C4SAP">C4SAP</option>
+                                                            <option value="CMS Core">CMS Core</option>
+                                            </select>
                                     </div>
-                                    <div class="form-group ">
-                                        <div class="col-md-4">
-                                            <label for="formulario">Unique ID </label>
-                                            <input type="text" name="id" class="form-control" required>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label>Stage: </label>
+                                        <select name="project_state" class="browser-default" required>
+                                                            <option value="" disabled selected>Choose Project Stage</option>
+                                                            <option value="engagement">Engagement</option>
+                                                            <option value="onboard">Onboarding</option>
+                                                            <option value="steady">Steady State</option>
+                                        </select>
                                     </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-md-4">
+                                        <label for="formulario">Unique ID </label>
+                                        <input type="text" name="id" class="form-control" required>
+                                    </div>
+                                </div>
 
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <label for="formulario">Project Situation </label>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label for="formulario">Project Situation </label>
 
-                                            <select name="situation" class="browser-default">
+                                        <select name="situation" class="browser-default">
                                                     <option value="" disabled selected>Choose Project Situation</option>
                                                     <option value="red">Red</option>
                                                     <option value="yellow">Yellow</option>
                                                     <option value="green">Green</option>
                                             </select>
-                                        </div>
                                     </div>
-                                    <div class="form-group ">
-                                        <div class="col-md-4">
-                                            <label for="formulario">Customer </label>
-                                            <input type="text" name="customer" class="form-control" required>
-                                        </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-md-4">
+                                        <label for="formulario">Customer </label>
+                                        <input type="text" name="customer" class="form-control" required>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <label for="formulario">Last Actions </label>
-                                            <textarea class="materialize-textarea" name="story" id="textarea1" required>
-                                            </textarea>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label for="formulario">Last Actions </label>
+                                        <textarea class="materialize-textarea" name="story" id="textarea1" ></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <label for="formulario">G2G </label>
-                                            <input type="text" name="g2g" class="form-control" value="" required>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label for="formulario">G2G </label>
+                                        <input type="text" name="g2g" class="form-control" value="" >
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <label for="formulario">MRR </label>
-                                            <input type="text" name="mrr" class="form-control" required/>    
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label for="formulario">MRR </label>
+                                        <input type="text" name="mrr" class="form-control" />
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <label for="formulario">TCV </label>
-                                            <input type="text" name="tcv" class="form-control" required/>    
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label for="formulario">TCV </label>
+                                        <input type="text" name="tcv" class="form-control" />
                                     </div>
+                                </div>
 
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <label for="formulario">Owner </label>
-                                            <input type="text" name="owner" class="form-control" id="ownerEdit" value="" readonly/>
-                                        </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label for="formulario">Owner </label>
+                                        <input type="text" name="owner" class="form-control" id="ownerEdit" value="" readonly/>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-md-4">
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
                                         <input type="hidden" name="isClosed" value="false" />
-                                        </div>
                                     </div>
-                            </div>
+                                </div>
                             </fieldset>
                         </div>
                     </div>
-                    <input type="submit" value="Submit" class="waves-effect waves-light btn blue darken-4">
-<!--                    <button value="Delete Project" class="waves-effect waves-light btn blue darken-4" onclick="return confirm('Are you sure you want to insert this project?');" style="cursor:pointer;">Submit Project</button>-->
+                </div>
+                <button class="btn waves-effect waves-light blue darken-4" type="submit" name="action">Submit
+                
+                </button>
+                <!--                <input type="submit" value="Submit" class="waves-effect waves-light btn blue darken-4">-->
+                <!--                    <button value="Delete Project" class="waves-effect waves-light btn blue darken-4" onclick="return confirm('Are you sure you want to insert this project?');" style="cursor:pointer;">Submit Project</button>-->
 
-        </div>
-        </section>
+            </section>
         </form>
 
-
-
-
-        </div>
         <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
-            <a class="btn-floating btn-large waves-effect waves-light blue darken-4" href="/getprojects">
+            <a class="btn-floating btn-large waves-effect waves-light blue darken-4" href="/panel">
                 <svg class="icon-carbon" viewBox='0 0 16 14' fill-rule='evenodd'><path d='M3.4 8H16V6H3.3l5-4.7L7 0 0 7l7 7 1.3-1.3z'></path></svg></a>
         </div>
     </main>
